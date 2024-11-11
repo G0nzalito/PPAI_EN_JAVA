@@ -97,7 +97,7 @@ public class Vino {
     }
 
     public boolean esDeBodega(String nombreBodega) {
-        return this.BODEGA != null && this.BODEGA.getNOMBRE().equals(nombreBodega);
+        return this.BODEGA != null && this.BODEGA.getNombre().equals(nombreBodega);
     }
 
     public boolean esTuNombre(String nombre) {
