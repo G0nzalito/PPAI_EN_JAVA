@@ -1,49 +1,52 @@
-export default function ActualizarBodegas() {
-    
+import { useNavigate } from "react-router-dom";
+
+export default function BodegasDisponibles() {
+const navigate = useNavigate();
+
+function handleVolver(){
+    navigate("/inicio");
+}
   return (
-    <div>
+    <div className="w-full">
       <header>
         <div className="background-container">
           <h1>BONVINO</h1>
           <h4>Encuentra el vino correcto</h4>
         </div>
       </header>
-      <body>
-        <main>
-          <table className="content-table w-full">
-            <thead>
-              <tr>
-                <th scope="col ">Bodega</th>
-                <th scope="col">Nombre del Vino</th>
-                <th scope="col">Añada</th>
-                <th scope="col">Fecha De Actualizacion</th>
-                <th scope="col">Imagen Etiqueta</th>
-                <th scope="col">Nota De Cata Bodega</th>
-                <th scope="col">Precio ARS</th>
-                <th scope="col">Puntaje Promedio</th>
-                <th scope="col">Varietales</th>
-                <th scope="col">Maridaje</th>
-                <th scope="col">Estado</th>
-              </tr>
-            </thead>
-            <tbody id="tablaVinosResumen">
-              <tr>
-                <th scope="row">Bodega</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-            </tbody>
-          </table>
-        </main>
+      <body className="">
+        <div className="py-4 px-4">
+          <h3>Selecciona la bodega a actualizar: </h3>
+          <div className="form-check">
+            <input
+              className="form-check-input"
+              type="radio"
+              name="flexRadioDefault"
+              id="flexRadioDefault1"
+            />
+            <label className="form-check-label" htmlFor="flexRadioDefault1">
+              Default radio
+            </label>
+          </div>
+          <div className="form-check">
+            <input
+              className="form-check-input"
+              type="radio"
+              name="flexRadioDefault"
+              id="flexRadioDefault2"
+              checked
+            />
+            <label className="form-check-label" htmlFor="flexRadioDefault2">
+              Default checked radio
+            </label>
+          </div>
+        </div>
+        <div className="px-4 py-4 d-flex justify-content-end">
+
+        <button className="btn btn-dark" onClick={handleVolver}>Volver</button>
+        </div>
       </body>
-      <footer className=" flex w-full bg-danger-subtle p-10">
+      <footer className=" flex w-full bg-danger-subtle px-4">
         <div className="container text-center ">
           <div className="container text-center ">
             <nav className="d-flex justify-content-evenly">
