@@ -70,7 +70,7 @@ public class Bodega {
     public List<Vino> mostrarTodosVinos(List<Vino> vinosGlobales) {
         List<Vino> vinosBodega = new ArrayList<>();
         for (Vino vino : vinosGlobales) {
-            if (vino.getBODEGA().getNOMBRE().equals(this.NOMBRE)) {
+            if (vino.getBODEGA().getNombre().equals(this.NOMBRE)) {
                 vinosBodega.add(vino);
             }
         }
@@ -90,7 +90,7 @@ public class Bodega {
                 vinoACrear.getNOTA_CATA(),
                 vinoACrear.getPRECIOARS(),
                 maridaje,
-                ,
+                null,
                 vinoACrear.getReseñas()
         );
     }
@@ -141,7 +141,7 @@ public class Bodega {
                     vino.setNOTA_CATA(vinoAActualizar.getNOTA_CATA());
                 }
             } else {
-                this.crearVino(vino);
+                this.crearVino(vino, null);
 
                 List<String> varietalAMostrar = new ArrayList<>();
                 for (Varietal varietal : vino.getVarietal()) {
@@ -169,4 +169,8 @@ public class Bodega {
         return fechaActual.isAfter(fechaActualizacion);
     }
 
+
+    public String getNombre(){
+        return this.NOMBRE;
+    }
 }
