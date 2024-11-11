@@ -56,6 +56,7 @@ public class Vino {
 
     }
 
+
     public boolean sosVinoAActualizar(List<Vino> dataVinoEnBD) {
         return dataVinoEnBD.stream().anyMatch(v -> v.NOMBRE.equals(this.NOMBRE));
     }

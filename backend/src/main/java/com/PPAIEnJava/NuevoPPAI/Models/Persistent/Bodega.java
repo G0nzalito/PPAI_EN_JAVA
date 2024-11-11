@@ -35,13 +35,16 @@ public class Bodega {
     private String novedad;
 
     public Bodega(String HISTORIA, String NOMBRE, String DESCRIPCION, Integer PERIDO_ACTUALIZACION, LocalDateTime FECHA_ULTIMA_ACTUALIZACION, int COORDENADAS) {
-        this.ID = ID;
         this.HISTORIA = HISTORIA;
         this.NOMBRE = NOMBRE;
         this.DESCRIPCION = DESCRIPCION;
         this.PERIDO_ACTUALIZACION = PERIDO_ACTUALIZACION;
         this.FECHA_ULTIMA_ACTUALIZACION = FECHA_ULTIMA_ACTUALIZACION;
         this.COORDENADAS = COORDENADAS;
+    }
+
+    public Bodega(){
+
     }
 
     @Override
@@ -56,11 +59,6 @@ public class Bodega {
                 ", COORDENADAS=" + COORDENADAS +
                 '}';
     }
-
-    public Bodega() {
-
-    }
-
 
 
     public void contarReseñas() {
