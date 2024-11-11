@@ -3,10 +3,6 @@
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -18,51 +14,71 @@ a {
   color: #646cff;
   text-decoration: inherit;
 }
-a:hover {
-  color: #535bf2;
+.icono {
+  width: 40px;
+  height: 40px;
+  display: inline-block; /* Asegura que íconos e imágenes ocupen el mismo espacio */
 }
 
-body {
-  margin: 0;
+nav a {
   display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px; /* Espaciado entre el ícono y la imagen */
+  text-decoration: none; /* Elimina subrayados */
+}
+.background-container {
+  background-image: url('./src/fotos/fondo2.jpg');
+  background-position: center; /* Centra la imagen */
+  background-repeat: no-repeat; /* Evita que la imagen se repita */
+  height:40vh; /* Altura de la ventana completa */
+  display: flex; /* Usar flexbox para centrar el contenido */
+  flex-direction: column; /* Apilar elementos verticalmente */
+  justify-content: center; /* Centrar verticalmente */
+  align-items: center; /* Centrar horizontalmente */
+  color: white; /* Cambia el color del texto para que sea visible */
+  text-align: center; /* Centra el texto dentro del contenedor */
+  padding: 0; 
+  margin: 0; 
 }
 
 h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+  font-size: 3rem; /* Ajusta el tamaño del título */
+  font-weight: bold; /* Negrita para el título */
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
+h4 {
+  font-size: 1.5rem; /* Ajusta el tamaño del subtítulo */
+  margin-top: 10px; /* Espaciado entre h1 y h4 */
 }
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+.content-table {
+  margin: 30px;
+  font-size: 15px;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 0 20px rgba(46, 20, 20, 0.15);
+  border-collapse: collapse;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+.content-table thead tr {
+  background-color: rgb(173, 173, 173);
+  color: #ffffff;
+  text-align: center;
+  font-weight: bold;
+}
+
+.content-table th,
+td {
+  padding: 12px 15px;
+}
+
+.content-table tbody tr {
+  border-bottom: 1px solid #dddddd;
+}
+
+.content-table tbody tr:nth-of-type(even) {
+  background-color: #eeeeee;
+}
+body {
+  min-height: 35vh; /* Asegura que el body tenga al menos la altura de la ventana */
 }
