@@ -6,7 +6,7 @@ import java.util.List;
 
 public class AppPrueba {
     public static void main(String[] args) {
-        System.out.println("Hola");
+        System.out.println("Probando ando: ");
         Bodega bodega = new Bodega("Historia", "Nombre", "Descripcion", 4, LocalDateTime.now(), 34);
         TipoUva uva = new TipoUva("Soy una uva", "Soy una descripcion");
         Varietal varietal = new Varietal(uva, 30);
@@ -20,7 +20,10 @@ public class AppPrueba {
         List<Reseña> Reseñas = new ArrayList<>();
         Reseñas.add(reseña);
         Vino vino = new Vino("soy un Vino!", bodega, 2, LocalDateTime.now(), "Imagen de vino", "Soy una nota", 2, Maridajes, Varietales, Reseñas);
-
-
+        System.out.println(
+                bodega.getDESCRIPCION()
+        );
+        System.out.println(bodega);
+        System.out.println(maridaje);
     }
 }
