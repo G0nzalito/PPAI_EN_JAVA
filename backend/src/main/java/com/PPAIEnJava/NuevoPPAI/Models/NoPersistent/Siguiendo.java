@@ -1,9 +1,13 @@
 package com.PPAIEnJava.NuevoPPAI.Models.NoPersistent;
 
 import com.PPAIEnJava.NuevoPPAI.Models.Persistent.Bodega;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
+@Getter
+@Setter
 public class Siguiendo {
     private LocalDateTime fechaInicio;
     private LocalDateTime fechaFin;

@@ -3,9 +3,12 @@ package com.PPAIEnJava.NuevoPPAI.Models.NoPersistent;
 import com.PPAIEnJava.NuevoPPAI.Models.Persistent.Bodega;
 import com.PPAIEnJava.NuevoPPAI.Models.Persistent.Reseña;
 import com.PPAIEnJava.NuevoPPAI.Models.Persistent.Vino;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
-
+@Getter
+@Setter
 public class Enofilo {
     private String apellido;
     private String imagenPerfil;
@@ -24,47 +27,6 @@ public class Enofilo {
         this.seguido = seguido != null ? seguido : List.of();
         this.reseña = reseña != null ? reseña : List.of();
         this.favorito = favorito != null ? favorito : List.of();
-    }
-
-
-    public List<Siguiendo> getSeguido() {
-        return seguido;
-    }
-
-    public void setSeguido(List<Siguiendo> seguido) {
-        this.seguido = seguido;
-    }
-
-    public String getApellido() {
-        return apellido;
-    }
-
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
-    }
-
-    public String getImagenPerfil() {
-        return imagenPerfil;
-    }
-
-    public void setImagenPerfil(String imagenPerfil) {
-        this.imagenPerfil = imagenPerfil;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
     }
 
     public boolean estaSuscriptoABodega(Bodega bodega) {

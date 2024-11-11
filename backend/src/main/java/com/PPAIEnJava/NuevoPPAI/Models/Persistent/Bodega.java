@@ -90,14 +90,14 @@ public class Bodega {
                 vinoACrear.getNOTA_CATA(),
                 vinoACrear.getPRECIOARS(),
                 maridaje,
-                null,
+                varietales,
                 vinoACrear.getReseñas()
         );
     }
 
     public List<Maridaje> buscarMaridaje(Vino vinoACrear, List<Maridaje> dataMaridajes) {
         List<Maridaje> maridajesADevolver = new ArrayList<>();
-        for (Maridaje maridajeAAsignar : vinoACrear.getMaridaje()) {
+        for (Maridaje maridajeAAsignar : vinoACrear.getMaridajesVino()) {
             for (Maridaje maridajeEnBd : dataMaridajes) {
                 if (maridajeEnBd.sosMaridaje(maridajeAAsignar.getNOMBRE())) {
                     maridajesADevolver.add(maridajeEnBd);
@@ -110,13 +110,13 @@ public class Bodega {
 
     public List<Varietal> buscarVarietales(Vino vinoACrear) {
         List<Varietal> Varietales = new ArrayList<>();
-        for (Varietal varietal : vinoACrear.getVarietal()) {
+        for (Varietal varietal : vinoACrear.getVarietalesVino()) {
             Varietales.add(new Varietal(varietal.getID_UVA(), varietal.getPORCENTAJE()));
         }
         return Varietales;
     }
 
-    public List<VinoActualizado> actualizarVinos(List<Vino> vinosAActualizar, List<Vino> dataVinoEnBD) {
+    public List<VinoActualizado> actualizarVinos(List<Vino> vinosAActualizar, List<Vino> dataVinoEnBD, List<Maridaje> dataMaridajes) {
         List<VinoActualizado> vinosActualizados = new ArrayList<>();
 
         for (Vino vino : vinosAActualizar) {
@@ -141,10 +141,10 @@ public class Bodega {
                     vino.setNOTA_CATA(vinoAActualizar.getNOTA_CATA());
                 }
             } else {
-                this.crearVino(vino, null);
+                this.crearVino(vino, dataMaridajes);
 
                 List<String> varietalAMostrar = new ArrayList<>();
-                for (Varietal varietal : vino.getVarietal()) {
+                for (Varietal varietal : vino.getVarietalesVino()) {
                     String nombreTipoUva = varietal.conocerTipoDeUva().getNOMBRE();
                     int porcentaje = varietal.getPORCENTAJE();
                     varietalAMostrar.add(nombreTipoUva + ": " + porcentaje + "%");
