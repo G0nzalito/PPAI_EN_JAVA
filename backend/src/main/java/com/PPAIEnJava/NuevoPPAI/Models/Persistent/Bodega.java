@@ -68,7 +68,7 @@ public class Bodega {
     public List<Vino> mostrarTodosVinos(List<Vino> vinosGlobales) {
         List<Vino> vinosBodega = new ArrayList<>();
         for (Vino vino : vinosGlobales) {
-            if (vino.getBODEGA().getNOMBRE().equals(this.NOMBRE)) {
+            if (vino.getBODEGA().getNombre().equals(this.NOMBRE)) {
                 vinosBodega.add(vino);
             }
         }
@@ -167,4 +167,8 @@ public class Bodega {
         return fechaActual.isAfter(fechaActualizacion);
     }
 
+
+    public String getNombre(){
+        return this.NOMBRE;
+    }
 }
