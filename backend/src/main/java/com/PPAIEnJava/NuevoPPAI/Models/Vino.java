@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "Vinos")
@@ -17,6 +18,8 @@ public class Vino {
 
     private String NOMBRE;
 
+    @OneToOne
+    @JoinColumn(referencedColumnName = "ID")
     private Bodega BODEGA;
 
     private int AÑADA;
@@ -28,6 +31,22 @@ public class Vino {
     private String NOTA_CATA;
 
     private Integer PRECIOARS;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "Maridaje_de_vino",
+            joinColumns = @JoinColumn(name = "ID_VINO"),
+            inverseJoinColumns = @JoinColumn(name = "ID_MARIDAJE")
+    )
+    private List<Maridaje> MaridajesVino;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "Varietal_de_vino",
+            joinColumns = @JoinColumn(name = "ID_VINO"),
+            inverseJoinColumns = @JoinColumn(name = "ID_VARIETAL")
+    )
+    private List<Varietal> VarietalesVino;
 
 
 }
