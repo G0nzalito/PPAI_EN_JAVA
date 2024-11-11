@@ -48,7 +48,7 @@ public class Maridaje {
     }
 
     public boolean maridaConVino(Vino vino) {
-        List<Maridaje> maridajes = vino.getMaridaje();
+        List<Maridaje> maridajes = vino.getMaridajesVino();
         List<String> maridajesNombres = new ArrayList<>();
 
         for (Maridaje maridaje : maridajes) {

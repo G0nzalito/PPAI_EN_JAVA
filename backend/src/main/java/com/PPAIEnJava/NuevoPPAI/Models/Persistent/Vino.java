@@ -52,6 +52,10 @@ public class Vino {
     @OneToMany(mappedBy = "ID_VINO")
     private List<Reseña> reseñas;
 
+    public Vino() {
+
+    }
+
     public boolean sosVinoAActualizar(List<Vino> dataVinoEnBD) {
         return dataVinoEnBD.stream().anyMatch(v -> v.NOMBRE.equals(this.NOMBRE));
     }
@@ -84,7 +88,7 @@ public class Vino {
 
     public List<String> getVarietalesAMostrar() {
         List<String> varietalesAMostrar = new ArrayList<>();
-        for (Varietal varietal : getVarietal()) {
+        for (Varietal varietal : getVarietalesVino()) {
             String nombreTipoUva = varietal.conocerTipoDeUva().getNOMBRE();
             int porcentaje = varietal.getPORCENTAJE();
             varietalesAMostrar.add(nombreTipoUva + ": " + porcentaje + "%");
@@ -93,24 +97,11 @@ public class Vino {
     }
 
     public boolean esDeBodega(String nombreBodega) {
-        return this.BODEGA != null && this.BODEGA.getNombre().equals(nombreBodega);
+        return this.BODEGA != null && this.BODEGA.getNOMBRE().equals(nombreBodega);
     }
 
     public boolean esTuNombre(String nombre) {
         return this.NOMBRE.equals(nombre);
-    }
-
-    public List<Varietal> getVarietal() {
-        // Aquí debería ir la lógica para obtener el varietal; agregué como ejemplo
-        // un método que devuelve una lista vacía, pero debes reemplazarlo con
-        // la implementación adecuada.
-        return new ArrayList<>();
-    }
-
-    public List<Maridaje> getMaridaje() {
-        // Similar al método anterior, devuelve una lista vacía de ejemplo;
-        // reemplaza con la implementación específica.
-        return new ArrayList<>();
     }
 
 }
