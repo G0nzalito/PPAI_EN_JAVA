@@ -20,10 +20,6 @@ public class AppPrueba {
         List<Reseña> Reseñas = new ArrayList<>();
         Reseñas.add(reseña);
         Vino vino = new Vino("soy un Vino!", bodega, 2, LocalDateTime.now(), "Imagen de vino", "Soy una nota", 2, Maridajes, Varietales, Reseñas);
-        System.out.println(
-                bodega.getDESCRIPCION()
-        );
-        System.out.println(bodega);
-        System.out.println(maridaje);
+
     }
 }

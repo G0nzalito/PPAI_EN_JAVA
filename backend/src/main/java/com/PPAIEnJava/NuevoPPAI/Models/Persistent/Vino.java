@@ -61,6 +61,23 @@ public class Vino {
         return dataVinoEnBD.stream().anyMatch(v -> v.NOMBRE.equals(this.NOMBRE));
     }
 
+    @Override
+    public String toString() {
+        return "Vino{" +
+                "IO=" + IO +
+                ", NOMBRE='" + NOMBRE + '\'' +
+                ", BODEGA=" + BODEGA +
+                ", AÑADA=" + AÑADA +
+                ", FECHA_ACTUALIZACION=" + FECHA_ACTUALIZACION +
+                ", IMAGEN_ETIQUETA='" + IMAGEN_ETIQUETA + '\'' +
+                ", NOTA_CATA='" + NOTA_CATA + '\'' +
+                ", PRECIOARS=" + PRECIOARS +
+                ", MaridajesVino=" + MaridajesVino +
+                ", VarietalesVino=" + VarietalesVino +
+                ", reseñas=" + reseñas +
+                '}';
+    }
+
     public Vino(String NOMBRE, Bodega BODEGA, int AÑADA, LocalDateTime FECHA_ACTUALIZACION, String IMAGEN_ETIQUETA, String NOTA_CATA, Integer PRECIOARS, List<Maridaje> maridajesVino, List<Varietal> varietalesVino, List<Reseña> reseñas) {
         this.NOMBRE = NOMBRE;
         this.BODEGA = BODEGA;
