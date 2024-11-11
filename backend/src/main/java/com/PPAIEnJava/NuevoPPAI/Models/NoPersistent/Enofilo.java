@@ -1,7 +1,8 @@
 package com.PPAIEnJava.NuevoPPAI.Models.NoPersistent;
 
-import com.PPAIEnJava.NuevoPPAI.Models.Reseña;
-import com.PPAIEnJava.NuevoPPAI.Models.Vino;
+import com.PPAIEnJava.NuevoPPAI.Models.Persistent.Bodega;
+import com.PPAIEnJava.NuevoPPAI.Models.Persistent.Reseña;
+import com.PPAIEnJava.NuevoPPAI.Models.Persistent.Vino;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ public class Enofilo {
     private List<Reseña> reseña;
     private List<Vino> favorito;
 
-    public Usuario(String apellido, String imagenPerfil, String nombre, Usuario usuario,
+    public Enofilo(String apellido, String imagenPerfil, String nombre, Usuario usuario,
                    List<Siguiendo> seguido, List<Reseña> reseña, List<Vino> favorito) {
         this.apellido = apellido;
         this.imagenPerfil = imagenPerfil;
@@ -24,6 +25,7 @@ public class Enofilo {
         this.reseña = reseña != null ? reseña : List.of();
         this.favorito = favorito != null ? favorito : List.of();
     }
+
 
     public List<Siguiendo> getSeguido() {
         return seguido;

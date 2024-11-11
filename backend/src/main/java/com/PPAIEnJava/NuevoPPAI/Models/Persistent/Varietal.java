@@ -1,4 +1,4 @@
-package com.PPAIEnJava.NuevoPPAI.Models;
+package com.PPAIEnJava.NuevoPPAI.Models.Persistent;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -34,14 +34,23 @@ public class Varietal {
                 '}';
     }
 
-    public Varietal(long ID, TipoUva ID_UVA, int PORCENTAJE, List<Vino> vinos) {
-        this.ID = ID;
+    public Varietal(TipoUva ID_UVA, int PORCENTAJE) {
         this.ID_UVA = ID_UVA;
         this.PORCENTAJE = PORCENTAJE;
-        Vinos = vinos;
     }
 
     public Varietal() {
 
+    }
+    public TipoUva conocerTipoDeUva() {
+        return this.ID_UVA;
+    }
+
+    public boolean esDeTipoUva(TipoUva tipoUva) {
+        return this.ID_UVA.getNOMBRE().equalsIgnoreCase(tipoUva.getNOMBRE());
+    }
+
+    public String mostrarPorcentaje() {
+        return this.PORCENTAJE + "%";
     }
 }

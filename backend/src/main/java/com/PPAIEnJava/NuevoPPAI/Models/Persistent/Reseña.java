@@ -1,4 +1,4 @@
-package com.PPAIEnJava.NuevoPPAI.Models;
+package com.PPAIEnJava.NuevoPPAI.Models.Persistent;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -24,11 +24,11 @@ public class Reseña {
 
     private int PUNTAJE;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(referencedColumnName = "ID")
     private Vino ID_VINO;
 
-    public Reseña(long ID, String COMENTARIO, Boolean ES_PREMIUM, LocalDateTime FECHA_RESEÑA, int PUNTAJE, Vino ID_VINO) {
+    public Reseña(String COMENTARIO, Boolean ES_PREMIUM, LocalDateTime FECHA_RESEÑA, int PUNTAJE, Vino ID_VINO) {
         this.ID = ID;
         this.COMENTARIO = COMENTARIO;
         this.ES_PREMIUM = ES_PREMIUM;
@@ -52,4 +52,9 @@ public class Reseña {
                 ", ID_VINO=" + ID_VINO +
                 '}';
     }
+
+    public void esPremium() {}
+    public void sosDeEnofilo() {}
+    public void sosDeSomellier() {}
+
 }

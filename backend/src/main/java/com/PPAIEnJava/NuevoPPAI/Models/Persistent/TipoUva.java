@@ -1,4 +1,4 @@
-package com.PPAIEnJava.NuevoPPAI.Models;
+package com.PPAIEnJava.NuevoPPAI.Models.Persistent;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -30,9 +30,18 @@ public class TipoUva {
 
     }
 
-    public TipoUva(long ID, String NOMBRE, String DESCRIPCION) {
+    public TipoUva(String NOMBRE, String DESCRIPCION) {
         this.ID = ID;
         this.NOMBRE = NOMBRE;
         this.DESCRIPCION = DESCRIPCION;
     }
+
+    public boolean sosTipoUva(String tipoAComprobar) {
+        return this.NOMBRE.equals(tipoAComprobar);
+    }
+
+    public String mostrarNombre(){
+        return this.NOMBRE;
+    }
+
 }

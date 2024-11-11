@@ -1,8 +1,7 @@
 package com.PPAIEnJava.NuevoPPAI.Models.NoPersistent;
 
-import com.PPAIEnJava.NuevoPPAI.Models.Bodega;
+import com.PPAIEnJava.NuevoPPAI.Models.Persistent.Bodega;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Siguiendo {
