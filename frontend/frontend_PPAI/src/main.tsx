@@ -14,7 +14,7 @@ createRoot(document.getElementById("root")!).render(
       <Switch>
         <Route path="/" component={App} />
         <Route path="/inicio" component={PaginaInicio} />
-        <Route path="/bodegas" component={ActualizarBodegas} />
+        <Route path="/actualizarBodegas" component={ActualizarBodegas} />
         <Route path="/bodegasDisponibles" component={BodegasDisponibles} />
       </Switch>
     </BrowserRouter>

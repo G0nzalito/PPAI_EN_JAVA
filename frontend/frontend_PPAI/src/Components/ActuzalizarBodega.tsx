@@ -1,5 +1,10 @@
+import useSearchParams from "../Hooks/Hooks";
+
 export default function ActualizarBodegas() {
-    
+
+  const { bodega } = useSearchParams();
+console.log(bodega);    
+
   return (
     <div>
       <header>

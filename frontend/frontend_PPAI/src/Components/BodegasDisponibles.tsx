@@ -1,11 +1,32 @@
 import { useNavigate } from "react-router-dom";
+import { getBodegas } from "../Services/services";
+import { useEffect, useState } from "react";
 
 export default function BodegasDisponibles() {
 const navigate = useNavigate();
+const [bodegaSeleccionada, setBodegaSeleccionada] = useState<string>("");
+
+interface Bodega {
+  nombre: string;
+}
+
+const [bodegas, setBodegas] = useState<Bodega[]>([]);
+useEffect(() => {
+    getBodegas().then((data) => {
+        setBodegas(data)
+        console.log(data);
+    });
+}, []);
+
+
+const handleContinuar = () => {
+    navigate(`/actualizarBodegas?bodega=${bodegaSeleccionada}`);
+}
 
 function handleVolver(){
     navigate("/inicio");
 }
+
   return (
     <div className="w-full">
       <header>
@@ -17,33 +38,28 @@ function handleVolver(){
       <body className="">
         <div className="py-4 px-4">
           <h3>Selecciona la bodega a actualizar: </h3>
-          <div className="form-check">
-            <input
-              className="form-check-input"
-              type="radio"
-              name="flexRadioDefault"
-              id="flexRadioDefault1"
-            />
-            <label className="form-check-label" htmlFor="flexRadioDefault1">
-              Default radio
-            </label>
-          </div>
-          <div className="form-check">
-            <input
-              className="form-check-input"
-              type="radio"
-              name="flexRadioDefault"
-              id="flexRadioDefault2"
-              checked
-            />
-            <label className="form-check-label" htmlFor="flexRadioDefault2">
-              Default checked radio
-            </label>
-          </div>
-        </div>
-        <div className="px-4 py-4 d-flex justify-content-end">
+          {bodegas.map((bodega) => {
+            return (
+              <div className="form-check">
+                <input
+                  className="form-check-input"
+                  type="radio"
+                  name="flexRadioDefault"
+                  id="flexRadioDefault1"
+                  onClick={() => setBodegaSeleccionada(bodega.nombre)}
+                />
+                <label className="form-check-label" htmlFor="flexRadioDefault1">
+                  {bodega.nombre}
+                </label>
+              </div>
+            );
+          })}
 
+        </div>
+        <div className="px-4 py-4 d-flex justify-content-between">
+    
         <button className="btn btn-dark" onClick={handleVolver}>Volver</button>
+          <button className="btn btn-primary" onClick={handleContinuar}>Confirmar</button>
         </div>
       </body>
       <footer className=" flex w-full bg-danger-subtle px-4">

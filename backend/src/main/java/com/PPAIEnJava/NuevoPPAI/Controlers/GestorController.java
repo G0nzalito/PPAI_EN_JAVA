@@ -13,6 +13,8 @@ import java.util.List;
 
 @RestController()
 @RequestMapping(path = "/gestor")
+@ResponseBody
+@CrossOrigin
 public class GestorController {
 
     private final Gestor gestor;

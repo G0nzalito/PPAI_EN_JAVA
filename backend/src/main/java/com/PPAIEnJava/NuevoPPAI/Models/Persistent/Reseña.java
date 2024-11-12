@@ -53,7 +53,9 @@ public class Reseña {
                 '}';
     }
 
-    public void esPremium() {}
+    public boolean esPremium() {
+        return false;
+    }
     public void sosDeEnofilo() {}
     public void sosDeSomellier() {}
 
