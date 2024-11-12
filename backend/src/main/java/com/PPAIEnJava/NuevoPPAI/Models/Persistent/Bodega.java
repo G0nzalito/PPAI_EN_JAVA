@@ -1,5 +1,6 @@
 package com.PPAIEnJava.NuevoPPAI.Models.Persistent;
 
+import com.PPAIEnJava.NuevoPPAI.Models.NoPersistent.VinoActualizado;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

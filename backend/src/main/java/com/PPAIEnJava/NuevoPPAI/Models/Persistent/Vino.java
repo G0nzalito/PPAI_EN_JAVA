@@ -64,7 +64,7 @@ public class Vino {
     @Override
     public String toString() {
         return "Vino{" +
-                "IO=" + IO +
+                "IO=" + ID +
                 ", NOMBRE='" + NOMBRE + '\'' +
                 ", BODEGA=" + BODEGA +
                 ", AÑADA=" + AÑADA +
