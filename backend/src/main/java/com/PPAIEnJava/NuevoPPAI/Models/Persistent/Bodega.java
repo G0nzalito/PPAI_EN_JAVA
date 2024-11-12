@@ -35,13 +35,16 @@ public class Bodega {
     private String novedad;
 
     public Bodega(String HISTORIA, String NOMBRE, String DESCRIPCION, Integer PERIDO_ACTUALIZACION, LocalDateTime FECHA_ULTIMA_ACTUALIZACION, int COORDENADAS) {
-        this.ID = ID;
         this.HISTORIA = HISTORIA;
         this.NOMBRE = NOMBRE;
         this.DESCRIPCION = DESCRIPCION;
         this.PERIDO_ACTUALIZACION = PERIDO_ACTUALIZACION;
         this.FECHA_ULTIMA_ACTUALIZACION = FECHA_ULTIMA_ACTUALIZACION;
         this.COORDENADAS = COORDENADAS;
+    }
+
+    public Bodega(){
+
     }
 
     @Override
@@ -57,11 +60,6 @@ public class Bodega {
                 '}';
     }
 
-    public Bodega() {
-
-    }
-
-
 
     public void contarReseñas() {
         // Método a implementar
@@ -70,7 +68,7 @@ public class Bodega {
     public List<Vino> mostrarTodosVinos(List<Vino> vinosGlobales) {
         List<Vino> vinosBodega = new ArrayList<>();
         for (Vino vino : vinosGlobales) {
-            if (vino.getBODEGA().getNOMBRE().equals(this.NOMBRE)) {
+            if (vino.getBODEGA().getNombre().equals(this.NOMBRE)) {
                 vinosBodega.add(vino);
             }
         }
@@ -169,4 +167,8 @@ public class Bodega {
         return fechaActual.isAfter(fechaActualizacion);
     }
 
+
+    public String getNombre(){
+        return this.NOMBRE;
+    }
 }
