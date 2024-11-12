@@ -25,21 +25,23 @@ public class Bodega {
 
     private String DESCRIPCION;
 
-    private Integer PERIDO_ACTUALIZACION;
+
+    private Integer PERIODO_ACTUALIZACION;
 
     private LocalDateTime FECHA_ULTIMA_ACTUALIZACION;
 
     private int COORDENADAS;
 
+    @Transient
     private String region;
-
+    @Transient
     private String novedad;
 
     public Bodega(String HISTORIA, String NOMBRE, String DESCRIPCION, Integer PERIDO_ACTUALIZACION, LocalDateTime FECHA_ULTIMA_ACTUALIZACION, int COORDENADAS) {
         this.HISTORIA = HISTORIA;
         this.NOMBRE = NOMBRE;
         this.DESCRIPCION = DESCRIPCION;
-        this.PERIDO_ACTUALIZACION = PERIDO_ACTUALIZACION;
+        this.PERIODO_ACTUALIZACION = PERIDO_ACTUALIZACION;
         this.FECHA_ULTIMA_ACTUALIZACION = FECHA_ULTIMA_ACTUALIZACION;
         this.COORDENADAS = COORDENADAS;
     }
@@ -55,7 +57,7 @@ public class Bodega {
                 ", HISTORIA='" + HISTORIA + '\'' +
                 ", NOMBRE='" + NOMBRE + '\'' +
                 ", DESCRIPCION='" + DESCRIPCION + '\'' +
-                ", PERIDO_ACTUALIZACION=" + PERIDO_ACTUALIZACION +
+                ", PERIDO_ACTUALIZACION=" + PERIODO_ACTUALIZACION +
                 ", FECHA_ULTIMA_ACTUALIZACION=" + FECHA_ULTIMA_ACTUALIZACION +
                 ", COORDENADAS=" + COORDENADAS +
                 '}';
@@ -164,8 +166,8 @@ public class Bodega {
 
     public boolean esTiempoDeActualizar(LocalDateTime fechaActual) {
         LocalDateTime fechaActualizacion = this.FECHA_ULTIMA_ACTUALIZACION;
-        LocalDateTime nuevaFecha = fechaActualizacion.plusMonths(this.getPERIDO_ACTUALIZACION());
-        return fechaActual.isAfter(fechaActualizacion);
+        LocalDateTime nuevaFecha = fechaActualizacion.plusMonths(this.getPERIODO_ACTUALIZACION());
+        return fechaActual.isAfter(nuevaFecha);
     }
 
 

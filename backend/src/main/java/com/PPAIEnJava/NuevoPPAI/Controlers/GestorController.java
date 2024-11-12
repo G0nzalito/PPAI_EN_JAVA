@@ -31,19 +31,18 @@ public class GestorController {
 
     @GetMapping(path = "/bodegas")
     public List<Bodega> opcionImportarActualizacion(){
-        List<Bodega> bodegas = new ArrayList<>();
-        Bodega b1 = new Bodega("hola", "brenda", "prueba", 5, LocalDateTime.now(), 3000);
-        Bodega b2 = new Bodega("hola", "alan", "prueba 2", 7, LocalDateTime.now(), 4000);
-        bodegas.add(b1);
-        bodegas.add(b2);
-        return bodegas;
+       return gestor.opcionImportarActualizaciones();
     }
-
-
 
     @GetMapping(path = "/resultadoTablas")
     public List<VinoActualizado> resultadoTablas(@RequestParam String bodegaSeleccionada){
+
+
+
         List<VinoActualizado> vinoActualizados = new ArrayList<>();
+
+
+
         Bodega bodega = new Bodega("Historia", "Nombre", "Descripcion", 4, LocalDateTime.now(), 34);
         TipoUva uva = new TipoUva("Soy una uva", "Soy una descripcion");
         Varietal varietal = new Varietal(uva, 30);
