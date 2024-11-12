@@ -15,7 +15,7 @@ import java.util.List;
 public class Vino {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int IO;
+    private int ID;
 
     private String NOMBRE;
 

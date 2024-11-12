@@ -1,8 +1,5 @@
-package com.PPAIEnJava.NuevoPPAI.Models.NoPersistent;
+package com.PPAIEnJava.NuevoPPAI.Models.Persistent;
 
-import com.PPAIEnJava.NuevoPPAI.Models.Persistent.Bodega;
-import com.PPAIEnJava.NuevoPPAI.Models.Persistent.Reseña;
-import com.PPAIEnJava.NuevoPPAI.Models.Persistent.Vino;
 import lombok.Getter;
 import lombok.Setter;
 
