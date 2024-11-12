@@ -1,9 +1,23 @@
 import useSearchParams from "../Hooks/Hooks";
+import { getBodegasActualizadas } from "../Services/services";
+import { useEffect, useState } from "react";
+
+interface Reseña {
+  puntaje: number;
+}
 
 export default function ActualizarBodegas() {
+  const [bodegasActualizada, setBodegasActualizada] = useState<[]>([]);
 
   const { bodega } = useSearchParams();
-console.log(bodega);    
+  console.log(bodega);
+
+  useEffect(() => {
+    getBodegasActualizadas(bodega).then((data) => {
+      setBodegasActualizada(data);
+      console.log(data);
+    });
+  }, );
 
   return (
     <div>
@@ -32,18 +46,58 @@ console.log(bodega);
               </tr>
             </thead>
             <tbody id="tablaVinosResumen">
-              <tr>
-                <th scope="row">Bodega</th>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
+              {bodegasActualizada.map((bodega) => {
+                const {
+                  vinoAMostrar: {
+                    bodega: bodegaInfo,
+                    nombre,
+                    añada,
+                    fecha_ACTUALIZACION,
+                    imagen_ETIQUETA,
+                    nota_CATA,
+                    precioars,
+                    reseñas,
+                    varietalesAMostrar,
+                    maridajesVino,
+                  },
+                  estado,
+                } = bodega;
+                // Calcular puntaje promedio
+                const puntajePromedio: string =
+                  reseñas.length > 0
+                  ? (
+                    reseñas.reduce(
+                      (acc: number, reseña: Reseña) => acc + reseña.puntaje,
+                      0
+                    ) / reseñas.length
+                    ).toFixed(2)
+                  : "Sin reseñas";
+
+                const varietales = varietalesAMostrar.join(", ");
+                return (
+                  <tr key={1}>
+                    <th scope="row">{bodegaInfo.nombre}</th>
+                    <td>{nombre}</td>
+                    <td>{añada}</td>
+                    <td>
+                      {new Date(fecha_ACTUALIZACION).toLocaleDateString()}
+                    </td>
+                    <td>
+                      <img
+                        src={imagen_ETIQUETA}
+                        alt={`Etiqueta de ${nombre}`}
+                        className="w-20 h-auto"
+                      />
+                    </td>
+                    <td>{nota_CATA}</td>
+                    <td>${precioars}</td>
+                    <td>{puntajePromedio}</td>
+                    <td>{varietales}</td>
+                    <td>{maridajesVino}</td>
+                    <td>{estado}</td>
+                  </tr>
+                );
+              })}
             </tbody>
           </table>
         </main>
