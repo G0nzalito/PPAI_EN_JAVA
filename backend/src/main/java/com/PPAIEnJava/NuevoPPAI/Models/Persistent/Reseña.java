@@ -28,8 +28,11 @@ public class Reseña {
     @JoinColumn(referencedColumnName = "ID")
     private Vino ID_VINO;
 
+    @ManyToOne
+    @JoinColumn(name = "ENOFILO_PROPIETARIO")
+    private Enofilo ENOFILO_PROPIETARIO;
+
     public Reseña(String COMENTARIO, Boolean ES_PREMIUM, LocalDateTime FECHA_RESEÑA, int PUNTAJE, Vino ID_VINO) {
-        this.ID = ID;
         this.COMENTARIO = COMENTARIO;
         this.ES_PREMIUM = ES_PREMIUM;
         this.FECHA_RESEÑA = FECHA_RESEÑA;

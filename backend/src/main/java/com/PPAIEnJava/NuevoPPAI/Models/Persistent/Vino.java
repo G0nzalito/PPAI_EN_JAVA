@@ -49,6 +49,14 @@ public class Vino {
     )
     private List<Varietal> VarietalesVino;
 
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "Vinos_de_enofilo",
+            joinColumns = @JoinColumn(name = "ID_VINO"),
+            inverseJoinColumns = @JoinColumn(name = "ID_ENOFILO")
+    )
+    private List<Enofilo> Enofilos;
+
     @OneToMany(mappedBy = "ID_VINO")
     private List<Reseña> reseñas;
 

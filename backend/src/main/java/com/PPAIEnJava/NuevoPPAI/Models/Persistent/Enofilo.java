@@ -1,18 +1,35 @@
 package com.PPAIEnJava.NuevoPPAI.Models.Persistent;
 
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
 @Getter
 @Setter
+@Entity
+@Table(name = "Enofilo")
 public class Enofilo {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long ID;
+
+    @Column(name = "APELLIDO")
     private String apellido;
+    @Column(name = "IMAGEN_PERFIL")
     private String imagenPerfil;
+    @Column(name = "NOMBRE")
     private String nombre;
+    @OneToOne
     private Usuario usuario;
+
+    @OneToMany(mappedBy = "ENOFILO_PROPIETARIO")
     private List<Siguiendo> seguido;
+
+    @OneToMany(mappedBy = "ENOFILO_PROPIETARIO")
     private List<Reseña> reseña;
+
+    @ManyToMany(mappedBy = "Enofilos")
     private List<Vino> favorito;
 
     public Enofilo(String apellido, String imagenPerfil, String nombre, Usuario usuario,
@@ -24,6 +41,10 @@ public class Enofilo {
         this.seguido = seguido != null ? seguido : List.of();
         this.reseña = reseña != null ? reseña : List.of();
         this.favorito = favorito != null ? favorito : List.of();
+    }
+
+    public Enofilo() {
+
     }
 
     public boolean estaSuscriptoABodega(Bodega bodega) {

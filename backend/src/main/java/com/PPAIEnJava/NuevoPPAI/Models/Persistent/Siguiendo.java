@@ -1,5 +1,6 @@
 package com.PPAIEnJava.NuevoPPAI.Models.Persistent;
 
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,30 +8,47 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@Entity
+@Table(name = "Siguiendo")
 public class Siguiendo {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long ID;
+
+    @Column(name = "FECHA_INICIO")
     private LocalDateTime fechaInicio;
+    @Column(name = "FECHA_FIN")
     private LocalDateTime fechaFin;
-    private Bodega bodega;
-    private String sommelier;
-    private Enofilo amigo;
+    @OneToOne
+    private Bodega BODEGA;
+    private String SOMMELIER;
+    @OneToOne
+    private Enofilo ENOFILO;
+    @ManyToOne
+    @JoinColumn(name = "ENOFILO_PROPIETARIO")
+    private Enofilo ENOFILO_PROPIETARIO;
 
     public Siguiendo(LocalDateTime fechaInicio, Object bodegaOSommelierOamigo) {
         this.fechaInicio = fechaInicio;
         this.fechaFin = null;
-        this.bodega = null;
-        this.sommelier = null;
-        this.amigo = null;
+        this.BODEGA = null;
+        this.SOMMELIER = null;
+        this.ENOFILO = null;
 
         if (bodegaOSommelierOamigo instanceof String) {
-            this.sommelier = (String) bodegaOSommelierOamigo;
+            this.SOMMELIER = (String) bodegaOSommelierOamigo;
         } else if (bodegaOSommelierOamigo instanceof Bodega) {
-            this.bodega = (Bodega) bodegaOSommelierOamigo;
+            this.BODEGA = (Bodega) bodegaOSommelierOamigo;
         } else if (bodegaOSommelierOamigo instanceof Enofilo) {
-            this.amigo = (Enofilo) bodegaOSommelierOamigo;
+            this.ENOFILO = (Enofilo) bodegaOSommelierOamigo;
         }
     }
 
+    public Siguiendo() {
+
+    }
+
     public boolean sosDeBodega(Bodega bodega) {
-        return this.bodega != null && this.bodega.equals(bodega);
+        return this.BODEGA != null && this.BODEGA.equals(bodega);
     }
 }
