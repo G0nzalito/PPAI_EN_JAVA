@@ -1,4 +1,4 @@
-package com.PPAIEnJava.NuevoPPAI.Models.NoPersistent;
+package com.PPAIEnJava.NuevoPPAI.Models.Persistent;
 
 import lombok.Getter;
 import lombok.Setter;

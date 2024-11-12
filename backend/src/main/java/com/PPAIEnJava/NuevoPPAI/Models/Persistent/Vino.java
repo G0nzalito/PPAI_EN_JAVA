@@ -15,7 +15,7 @@ import java.util.List;
 public class Vino {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int IO;
+    private int ID;
 
     private String NOMBRE;
 
@@ -64,7 +64,7 @@ public class Vino {
     @Override
     public String toString() {
         return "Vino{" +
-                "IO=" + IO +
+                "IO=" + ID +
                 ", NOMBRE='" + NOMBRE + '\'' +
                 ", BODEGA=" + BODEGA +
                 ", AÑADA=" + AÑADA +
