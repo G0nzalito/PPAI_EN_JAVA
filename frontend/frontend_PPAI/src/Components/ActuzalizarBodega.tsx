@@ -8,16 +8,19 @@ interface Reseña {
 
 export default function ActualizarBodegas() {
   const [bodegasActualizada, setBodegasActualizada] = useState<[]>([]);
+  const [loading, setLoading] = useState<boolean>(true); // Para manejar el estado de carga
 
   const { bodega } = useSearchParams();
   console.log(bodega);
 
   useEffect(() => {
-    getBodegasActualizadas(bodega).then((data) => {
-      setBodegasActualizada(data);
-      console.log(data);
-    });
-  },[bodega]);
+    getBodegasActualizadas(bodega)
+      .then((data) => {
+        setBodegasActualizada(data);
+        console.log(data);
+      })
+      .finally(() => setLoading(false)); // Finalizamos el estado de carga
+  }, [bodega]);
 
   return (
     <div>
@@ -27,8 +30,12 @@ export default function ActualizarBodegas() {
           <h4>Encuentra el vino correcto</h4>
         </div>
       </header>
-      <body>
-        <main>
+      <main>
+        {loading ? (
+          <p>Cargando datos...</p> // Mensaje mientras carga
+        ) : bodegasActualizada.length === 0 ? (
+          <p>No hay bodegas disponibles para actualizar.</p> // Mensaje cuando no hay bodegas
+        ) : (
           <table className="content-table w-full">
             <thead>
               <tr>
@@ -48,23 +55,22 @@ export default function ActualizarBodegas() {
             <tbody id="tablaVinosResumen">
               {bodegasActualizada.map((bodega) => {
                 return (
-                // @ts-expect-error no te hagas problema ts
-
+                  // @ts-expect-error no te hagas problema ts
                   <tr key={bodega.vinoAMostrar.id}>
                     <th scope="row">
                       {
                         //@ts-expect-error no te preocupes ts
                         bodega.vinoAMostrar.bodega.nombre
                       }
-                      </th>
+                    </th>
                     <td>{bodega.vinoAMostrar.nombre}</td>
                     <td>{bodega.vinoAMostrar.añada}</td>
                     <td>
-                      {new Date(bodega.vinoAMostrar.fecha_ACTUALIZACION).toLocaleDateString()}
+                      {new Date(
+                        bodega.vinoAMostrar.fecha_ACTUALIZACION
+                      ).toLocaleDateString()}
                     </td>
-                    <td>
-                      {bodega.vinoAMostrar.imagen_ETIQUETA}
-                    </td>
+                    <td>{bodega.vinoAMostrar.imagen_ETIQUETA}</td>
                     <td>{bodega.vinoAMostrar.nota_CATA}</td>
                     <td>${bodega.vinoAMostrar.precioars}</td>
                     <td>{5}</td>
@@ -76,8 +82,8 @@ export default function ActualizarBodegas() {
               })}
             </tbody>
           </table>
-        </main>
-      </body>
+        )}
+      </main>
       <footer className=" flex w-full bg-danger-subtle p-10">
         <div className="container text-center ">
           <div className="container text-center ">
