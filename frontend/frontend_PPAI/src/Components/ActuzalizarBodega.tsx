@@ -17,7 +17,7 @@ export default function ActualizarBodegas() {
       setBodegasActualizada(data);
       console.log(data);
     });
-  }, );
+  },[bodega]);
 
   return (
     <div>
@@ -47,54 +47,30 @@ export default function ActualizarBodegas() {
             </thead>
             <tbody id="tablaVinosResumen">
               {bodegasActualizada.map((bodega) => {
-                const {
-                  vinoAMostrar: {
-                    bodega: bodegaInfo,
-                    nombre,
-                    añada,
-                    fecha_ACTUALIZACION,
-                    imagen_ETIQUETA,
-                    nota_CATA,
-                    precioars,
-                    reseñas,
-                    varietalesAMostrar,
-                    maridajesVino,
-                  },
-                  estado,
-                } = bodega;
-                // Calcular puntaje promedio
-                const puntajePromedio: string =
-                  reseñas.length > 0
-                  ? (
-                    reseñas.reduce(
-                      (acc: number, reseña: Reseña) => acc + reseña.puntaje,
-                      0
-                    ) / reseñas.length
-                    ).toFixed(2)
-                  : "Sin reseñas";
-
-                const varietales = varietalesAMostrar.join(", ");
                 return (
-                  <tr key={1}>
-                    <th scope="row">{bodegaInfo.nombre}</th>
-                    <td>{nombre}</td>
-                    <td>{añada}</td>
+                // @ts-expect-error no te hagas problema ts
+
+                  <tr key={bodega.vinoAMostrar.id}>
+                    <th scope="row">
+                      {
+                        //@ts-expect-error no te preocupes ts
+                        bodega.vinoAMostrar.bodega.nombre
+                      }
+                      </th>
+                    <td>{bodega.vinoAMostrar.nombre}</td>
+                    <td>{bodega.vinoAMostrar.añada}</td>
                     <td>
-                      {new Date(fecha_ACTUALIZACION).toLocaleDateString()}
+                      {new Date(bodega.vinoAMostrar.fecha_ACTUALIZACION).toLocaleDateString()}
                     </td>
                     <td>
-                      <img
-                        src={imagen_ETIQUETA}
-                        alt={`Etiqueta de ${nombre}`}
-                        className="w-20 h-auto"
-                      />
+                      {bodega.vinoAMostrar.imagen_ETIQUETA}
                     </td>
-                    <td>{nota_CATA}</td>
-                    <td>${precioars}</td>
-                    <td>{puntajePromedio}</td>
-                    <td>{varietales}</td>
-                    <td>{maridajesVino}</td>
-                    <td>{estado}</td>
+                    <td>{bodega.vinoAMostrar.nota_CATA}</td>
+                    <td>${bodega.vinoAMostrar.precioars}</td>
+                    <td>{5}</td>
+                    <td>{"hola"}</td>
+                    <td>{"sdkasj"}</td>
+                    <td>{bodega.estado}</td>
                   </tr>
                 );
               })}
