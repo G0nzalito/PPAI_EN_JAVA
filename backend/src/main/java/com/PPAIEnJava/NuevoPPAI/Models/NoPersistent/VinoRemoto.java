@@ -10,8 +10,8 @@ import java.util.Objects;
 
 @Getter
 @Setter
-@Table(name = "VinosRemotos")
 @Entity
+@Table(name = "vinos_remotos")
 public class VinoRemoto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,8 +19,9 @@ public class VinoRemoto {
 
     private String NOMBRE;
 
-    private Bodega BODEGA;
+    private int BODEGA;
 
+    @Column(name = "ANIADA")
     private int AÑADA;
 
     private LocalDateTime FECHA_ACTUALIZACION;
@@ -28,6 +29,13 @@ public class VinoRemoto {
     private String IMAGEN_ETIQUETA;
 
     private String NOTA_CATA;
+
+
+    private Integer PRECIOARS;
+
+    private String Maridajes;
+
+    private String Varietales;
 
     public VinoRemoto() {
 
@@ -46,7 +54,7 @@ public class VinoRemoto {
         return Objects.hash(ID, NOMBRE, BODEGA, AÑADA, FECHA_ACTUALIZACION, IMAGEN_ETIQUETA, NOTA_CATA, PRECIOARS, Maridajes, Varietales);
     }
 
-    public VinoRemoto(String NOMBRE, Bodega BODEGA, int AÑADA, LocalDateTime FECHA_ACTUALIZACION, String IMAGEN_ETIQUETA, String NOTA_CATA, Integer PRECIOARS, String maridajes, String varietales) {
+    public VinoRemoto(String NOMBRE, int BODEGA, int AÑADA, LocalDateTime FECHA_ACTUALIZACION, String IMAGEN_ETIQUETA, String NOTA_CATA, Integer PRECIOARS, String maridajes, String varietales) {
         this.NOMBRE = NOMBRE;
         this.BODEGA = BODEGA;
         this.AÑADA = AÑADA;
@@ -72,10 +80,4 @@ public class VinoRemoto {
                 ", NOMBRE='" + NOMBRE + '\'' +
                 '}';
     }
-
-    private Integer PRECIOARS;
-
-    private String Maridajes;
-
-    private String Varietales;
 }

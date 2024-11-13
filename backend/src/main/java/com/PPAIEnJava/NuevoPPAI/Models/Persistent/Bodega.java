@@ -5,15 +5,17 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BinaryOperator;
 
 @Entity
 @Table(name = "Bodegas")
 @Getter
 @Setter
-public class Bodega {
+public class Bodega implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
@@ -30,7 +32,7 @@ public class Bodega {
 
     private LocalDateTime FECHA_ULTIMA_ACTUALIZACION;
 
-    private int COORDENADAS;
+    private long COORDENADAS;
 
     @Transient
     private String region;

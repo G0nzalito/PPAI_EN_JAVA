@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface BodegaRepository extends JpaRepository<Bodega, Long> {
-    @Query(value = "SELECT B FROM Bodega B WHERE B.NOMBRE LIKE %:nombre%")
+    @Query(value = "SELECT B.ID FROM Bodega B WHERE B.NOMBRE LIKE %:nombre%")
     long recoverIdByNombre(@Param("nombre") String nombre);
 }

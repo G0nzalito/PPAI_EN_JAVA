@@ -29,7 +29,12 @@ public class Enofilo {
     @OneToMany(mappedBy = "ENOFILO_PROPIETARIO")
     private List<Reseña> reseña;
 
-    @ManyToMany(mappedBy = "Enofilos")
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "Vinos_de_enofilo",
+            joinColumns = @JoinColumn(name = "ID_VINO"),
+            inverseJoinColumns = @JoinColumn(name = "ID_ENOFILO")
+    )
     private List<Vino> favorito;
 
     public Enofilo(String apellido, String imagenPerfil, String nombre, Usuario usuario,

@@ -21,16 +21,12 @@ public class Varietal {
 
     private int PORCENTAJE;
 
-    @ManyToMany(mappedBy = "VarietalesVino")
-    private List<Vino> Vinos;
-
     @Override
     public String toString() {
         return "Varietal{" +
                 "ID=" + ID +
                 ", ID_UVA=" + ID_UVA +
                 ", PORCENTAJE=" + PORCENTAJE +
-                ", Vinos=" + Vinos +
                 '}';
     }
 

@@ -21,8 +21,6 @@ public class Maridaje {
 
     private String DESCRIPCION;
 
-    @ManyToMany(mappedBy = "MaridajesVino")
-    private List<Vino> VinosMaridados;
 
     public Maridaje(String NOMBRE, String DESCRIPCION) {
         this.ID = ID;

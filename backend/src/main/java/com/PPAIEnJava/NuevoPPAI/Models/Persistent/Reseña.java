@@ -44,6 +44,10 @@ public class Reseña {
 
     }
 
+    public Long getVinoId(){
+        return this.ID_VINO.getID();
+    }
+
     @Override
     public String toString() {
         return "Reseña{" +

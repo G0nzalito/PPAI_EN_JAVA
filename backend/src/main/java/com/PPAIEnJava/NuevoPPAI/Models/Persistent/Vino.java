@@ -15,14 +15,15 @@ import java.util.List;
 public class Vino {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int ID;
+    private long ID;
 
     private String NOMBRE;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(referencedColumnName = "ID")
     private Bodega BODEGA;
 
+    @Column(name = "ANIADA")
     private int AÑADA;
 
     private LocalDateTime FECHA_ACTUALIZACION;
@@ -33,7 +34,7 @@ public class Vino {
 
     private Integer PRECIOARS;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "Maridaje_de_vino",
             joinColumns = @JoinColumn(name = "ID_VINO"),
@@ -41,21 +42,13 @@ public class Vino {
     )
     private List<Maridaje> MaridajesVino;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "Varietal_de_vino",
             joinColumns = @JoinColumn(name = "ID_VINO"),
             inverseJoinColumns = @JoinColumn(name = "ID_VARIETAL")
     )
     private List<Varietal> VarietalesVino;
-
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "Vinos_de_enofilo",
-            joinColumns = @JoinColumn(name = "ID_VINO"),
-            inverseJoinColumns = @JoinColumn(name = "ID_ENOFILO")
-    )
-    private List<Enofilo> Enofilos;
 
     @OneToMany(mappedBy = "ID_VINO")
     private List<Reseña> reseñas;

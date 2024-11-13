@@ -40,7 +40,7 @@ public class GestorController {
 
 
         List<VinoActualizado> vinoActualizados = new ArrayList<>();
-
+        gestor.tomarSeleccionDeBodega(bodegaSeleccionada);
 
 
         Bodega bodega = new Bodega("Historia", "Nombre", "Descripcion", 4, LocalDateTime.now(), 34);

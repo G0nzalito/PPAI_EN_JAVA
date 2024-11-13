@@ -9,15 +9,14 @@ import java.util.List;
 
 public class InterfazSistemaBodega {
 
-    private VinoRemotoRepositroy vinoRemotoRepositroy;
+    private InterfazBD interfazBD;
 
-    public InterfazSistemaBodega(VinoRemotoRepositroy vinoRemotoRepositroy) {
-        this.vinoRemotoRepositroy = vinoRemotoRepositroy;
+    public InterfazSistemaBodega(InterfazBD interfazBD) {
+        this.interfazBD = interfazBD;
     }
 
     public List<VinoRemoto> obtenerActualizacionesVinos(long idBodega){
         String idBodegaStr = String.valueOf(idBodega);
-        List<VinoRemoto> vinosAActualizar = vinoRemotoRepositroy.findVinoByBodega(idBodegaStr);
-        return vinosAActualizar;
+        return interfazBD.getVinosEnRemoto(idBodegaStr);
     }
 }
