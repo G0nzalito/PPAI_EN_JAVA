@@ -1,6 +1,7 @@
 package com.PPAIEnJava.NuevoPPAI.Models.Persistent;
 
 import com.PPAIEnJava.NuevoPPAI.Models.NoPersistent.VinoActualizado;
+import com.PPAIEnJava.NuevoPPAI.Models.NoPersistent.VinoRemoto;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -119,10 +120,10 @@ public class Bodega implements Serializable {
         return Varietales;
     }
 
-    public List<VinoActualizado> actualizarVinos(List<Vino> vinosAActualizar, List<Vino> dataVinoEnBD, List<Maridaje> dataMaridajes) {
+    public List<VinoActualizado> actualizarVinos(List<VinoRemoto> vinosAActualizar, List<Vino> dataVinoEnBD, List<Maridaje> dataMaridajes) {
         List<VinoActualizado> vinosActualizados = new ArrayList<>();
 
-        for (Vino vino : vinosAActualizar) {
+        for (Vino vino : dataVinoEnBD) {
             if (vino.sosVinoAActualizar(dataVinoEnBD)) {
                 Vino vinoAActualizar = dataVinoEnBD.stream()
                         .filter(v -> v.esTuNombre(vino.getNOMBRE()))

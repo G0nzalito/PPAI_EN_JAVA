@@ -93,18 +93,7 @@ public class InterfazBD {
     }
 
     public void getVinosOfBodega(long idBodega, List<Maridaje> maridajes, List<Bodega> bodegas, List<Varietal> varietales, List<Enofilo> enofilos, List<Reseña> reseñas){
-        String idBodegaStr = String.valueOf(idBodega);
-        List<Object[]> vinosParaReconstruir = vinoRepository.findVinoByBodega(idBodegaStr);
-        for(Object[] vino : vinosParaReconstruir){
-            Vino v = new Vino();
-            v.setID((Integer) vino[0]);
-            v.setNOMBRE((String) vino[1]);
-            v.setAÑADA((Integer) vino[3]);
-            v.setFECHA_ACTUALIZACION(((Timestamp) vino[4]).toLocalDateTime());
-            v.setIMAGEN_ETIQUETA((String) vino[5]);
-            v.setNOTA_CATA((String) vino[6]);
-            v.setPRECIOARS((Integer) vino[7]);
-        }
+
     }
 
 

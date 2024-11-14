@@ -54,18 +54,6 @@ public class Gestor {
         this.vinos = interfazBD.getVinos(maridajes, bodegas, varietales, enofilos, reseñas);
         this.reseñas = interfazBD.getReseñas(vinos, enofilos);
         interfazBD.reconstruirVinosDeEnofilo(enofilos, vinos);
-        andas();
-    }
-
-    private void andas(){
-// Imprimir todos los elementos de la lista vinos
-        System.out.println("Lista de Vinos:");
-        Iterator<Vino> iterator = vinos.iterator();
-        while(iterator.hasNext()){
-            System.out.println("Lista de:" + iterator.next());
-
-        }
-
     }
 
     //List<Bodega>
@@ -92,10 +80,9 @@ public class Gestor {
     public void tomarSeleccionDeBodega(String nombreBodega){
         long idBodega = bodegaRepository.recoverIdByNombre(nombreBodega);
         this.bodegaAActualzar = bodegaRepository.findById(idBodega).get();
-        List<VinoRemoto> vinoAActualizar = obtenerActualizacionesVinos(idBodega);
-        List<Maridaje> maridajes = interfazBD.getMaridajes();
-//        interfazBD.getVinosOfBodega(idBodega);
-//        this.bodegaAActualzar.actualizarVinos();
+        List<VinoRemoto> vinosAActualizar = obtenerActualizacionesVinos(idBodega);
+        List<Vino> vinosDeBodega = vinos.stream().filter(v -> v.esDeBodega(bodegaAActualzar.getNombre())).toList();
+        this.bodegaAActualzar.actualizarVinos(vinosAActualizar, vinosDeBodega, maridajes);
     }
 
     private List<VinoRemoto> obtenerActualizacionesVinos(Long idBodega){
