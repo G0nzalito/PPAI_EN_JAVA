@@ -66,16 +66,16 @@ public class Vino {
     public String toString() {
         return "Vino{" +
                 "IO=" + ID +
-                ", NOMBRE='" + NOMBRE + '\'' +
-                ", BODEGA=" + BODEGA +
-                ", AÑADA=" + AÑADA +
-                ", FECHA_ACTUALIZACION=" + FECHA_ACTUALIZACION +
-                ", IMAGEN_ETIQUETA='" + IMAGEN_ETIQUETA + '\'' +
-                ", NOTA_CATA='" + NOTA_CATA + '\'' +
-                ", PRECIOARS=" + PRECIOARS +
-                ", MaridajesVino=" + MaridajesVino +
-                ", VarietalesVino=" + VarietalesVino +
-                ", reseñas=" + reseñas +
+                ", NOMBRE='" + NOMBRE + '\n' +
+                ", BODEGA=" + BODEGA + '\n' +
+                ", AÑADA=" + AÑADA + '\n' +
+                ", FECHA_ACTUALIZACION=" + FECHA_ACTUALIZACION + '\n' +
+                ", IMAGEN_ETIQUETA='" + IMAGEN_ETIQUETA + '\n' +
+                ", NOTA_CATA='" + NOTA_CATA + '\n' +
+                ", PRECIOARS=" + PRECIOARS + '\n' +
+                ", MaridajesVino=" + MaridajesVino + '\n'+
+                ", VarietalesVino=" + VarietalesVino + '\n' +
+//                ", reseñas=" + reseñas +
                 '}';
     }
 

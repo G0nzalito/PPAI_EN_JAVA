@@ -56,7 +56,7 @@ public class Reseña {
                 ", ES_PREMIUM=" + ES_PREMIUM +
                 ", FECHA_RESEÑA=" + FECHA_RESEÑA +
                 ", PUNTAJE=" + PUNTAJE +
-                ", ID_VINO=" + ID_VINO +
+                ", ID_VINO=" + ID_VINO.getID() +
                 '}';
     }
 

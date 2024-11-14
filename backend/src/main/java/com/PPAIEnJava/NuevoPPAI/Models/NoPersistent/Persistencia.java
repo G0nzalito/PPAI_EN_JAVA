@@ -31,18 +31,22 @@ public class Persistencia {
                 bodegaSiguiendo = bodegas.stream().filter(bod -> (Integer) siguiendo[3] == bod.getID()).findFirst().get();
                 SommelierSiguiendo = "";
 
-            } else if (siguiendo[4] != null) {
-                enofiloSiguiendo = enofilos.stream().filter(en -> (Integer) siguiendo[4] == en.getID()).findFirst().get();
+            } else if (siguiendo[5] != null) {
+                enofiloSiguiendo = enofilos.stream().filter(en -> (Integer) siguiendo[5] == en.getID()).findFirst().get();
                 SommelierSiguiendo = "";
 
             }else{
-                SommelierSiguiendo = (String) siguiendo[5];
+                SommelierSiguiendo = (String) siguiendo[4];
             }
 
             Siguiendo s = new Siguiendo();
             s.setID((Integer) siguiendo[0]);
             s.setFechaInicio(((Timestamp) siguiendo[1]).toLocalDateTime());
-            s.setFechaFin(((Timestamp) siguiendo[2]).toLocalDateTime());
+            if(siguiendo[2] != null){
+                s.setFechaFin(((Timestamp) siguiendo[2]).toLocalDateTime());
+            }else{
+                s.setFechaFin(null);
+            }
             s.setENOFILO_PROPIETARIO(enofiloPropietario);
             s.setBODEGA(bodegaSiguiendo);
             s.setENOFILO(enofiloSiguiendo);
@@ -82,7 +86,6 @@ public class Persistencia {
 
     public List<Varietal>reconstruirVarietal(List<TipoUva> tipoUvas, List<Object[]> varietalesAReconstruir){
         List<Varietal> varietales = new ArrayList<>();
-        Iterator<TipoUva> iterator = tipoUvas.iterator();
 
         for (Object[] varietal : varietalesAReconstruir){
 
@@ -98,40 +101,38 @@ public class Persistencia {
         return varietales;
     }
 
-    public List<Vino> reconstruirVinos(List<Object[]> vinosAReconstruir, List<Maridaje> maridajes, List<Bodega> bodegas, List<Varietal> varietales, List<Enofilo> enofilos, List<Reseña> reseñas, List<Long> varietalesDeVino, List<Long> maridajesDeVino){
-        List<Vino> vinos = new ArrayList<Vino>();
-        List<Maridaje> maridajesAGuardar = new ArrayList<Maridaje>();
-        List<Varietal> varietalesAGuardar = new ArrayList<Varietal>();
+    public List<Vino> reconstruirVinos(List<Object[]> vinosAReconstruir, List<Maridaje> maridajes, List<Bodega> bodegas, List<Varietal> varietales, List<Enofilo> enofilos, List<Object[]> varietalesDeVino, List<Object[]> maridajesDeVino){
 
-        Iterator<Long> itMar = maridajesDeVino.iterator();
-        Iterator<Long> itVar = varietalesDeVino.iterator();
+        List<Vino> vinos = new ArrayList<Vino>();
 
         for(Object[] vino : vinosAReconstruir){
-            Bodega bodegaAGuardar = bodegas.stream().filter(b -> vino[2].equals(b.getID())).findFirst().orElse(null);
+            List<Maridaje> maridajesAGuardar = new ArrayList<Maridaje>();
+            List<Varietal> varietalesAGuardar = new ArrayList<Varietal>();
+            Bodega bodegaAGuardar = bodegas.stream().filter(b -> (Integer) vino[2] == b.getID()).findFirst().orElse(null);
 
 
             //Asignamos los Maridajes
-            while(itMar.hasNext()){
-                Long idMaridaje = itMar.next();
-                Maridaje maridajeAGuardar = maridajes.stream().filter(m -> idMaridaje.equals(m.getID())).findFirst().orElse(null);
+            List<Object[]> maridajesDelVIno = maridajesDeVino.stream().filter(tup -> (Integer) tup[0] == vino[0]).toList();
+
+            for (Object[] maridaje : maridajesDelVIno) {
+                Maridaje maridajeAGuardar = maridajes.stream().filter(mar -> mar.getID() == (Integer) maridaje[1]).findFirst().orElse(null);
                 maridajesAGuardar.add(maridajeAGuardar);
             }
 
             //Asignamos los Varietales
-            while(itVar.hasNext()){
-                Long idVarietal = itVar.next();
-                Varietal varietalAGuardar = varietales.stream().filter(v -> idVarietal.equals(v.getID())).findFirst().orElse(null);
+
+            List<Object[]> varietalesDelVino = varietalesDeVino.stream().filter(tup -> (Integer) tup[0] == vino[0]).toList();
+
+            for (Object[] varietal : varietalesDelVino) {
+                Varietal varietalAGuardar = varietales.stream().filter(vari -> vari.getID() == (Integer) varietal[1]).findFirst().orElse(null);
                 varietalesAGuardar.add(varietalAGuardar);
             }
-
-            //Asignamos las reseñas
-//            List<Reseña> reseñasAGuardar = reseñas.stream().filter(reseña -> reseña.getVinoId().equals(vino[0])).toList();
 
             //Creamos un vino vacio
             Vino v = new Vino();
 
             //Le asignamos los datos de la BD
-            v.setID((Long) vino[0]);
+            v.setID((Integer) vino[0]);
             v.setNOMBRE((String) vino[1]);
             v.setBODEGA(bodegaAGuardar);
             v.setAÑADA((Integer) vino[3]);
@@ -146,6 +147,7 @@ public class Persistencia {
             //Lo agregamos al array
             vinos.add(v);
         }
+
         return vinos;
     }
 
@@ -176,5 +178,22 @@ public class Persistencia {
             }
         }
         return reseñas;
+    }
+
+    public void reconstruirVinosDeEnofilo(List<Enofilo> enofilos, List<Vino> vinos, List<Object[]> relacionesVinoEnofilo){
+        for(Object[] vinoEnofilo : relacionesVinoEnofilo){
+
+            Enofilo enofiloSeleccionado = enofilos.stream().filter(en -> (Integer) vinoEnofilo[0] == en.getID()).findFirst().orElse(null);
+
+            Vino vinoFavorito = vinos.stream().filter(vino -> (Integer) vinoEnofilo[1] == vino.getID()).findFirst().orElse(null);
+
+            if (enofiloSeleccionado.getFavorito() == null){
+                List<Vino> favoritos = new ArrayList<>();
+                favoritos.add(vinoFavorito);
+                enofiloSeleccionado.setFavorito(favoritos);
+            }else{
+                enofiloSeleccionado.getFavorito().add(vinoFavorito);
+            }
+        }
     }
 }

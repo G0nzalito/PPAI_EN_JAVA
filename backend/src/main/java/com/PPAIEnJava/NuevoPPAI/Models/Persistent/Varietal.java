@@ -25,7 +25,7 @@ public class Varietal {
     public String toString() {
         return "Varietal{" +
                 "ID=" + ID +
-                ", ID_UVA=" + ID_UVA +
+                ", UVA=" + ID_UVA.getNOMBRE() +
                 ", PORCENTAJE=" + PORCENTAJE +
                 '}';
     }

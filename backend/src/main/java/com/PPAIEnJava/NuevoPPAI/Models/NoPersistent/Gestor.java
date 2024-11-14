@@ -15,6 +15,19 @@ import java.util.List;
 @Service
 public class Gestor {
 
+    // OBJETOS DE LA BD CARGADOS EN MEMORIA
+
+    private List<Bodega> bodegas;
+    private List<Enofilo> enofilos;
+    private List<Maridaje> maridajes;
+    private List<Reseña> reseñas;
+    private List<Siguiendo> seguidos;
+    private List<TipoUva> tiposUvas;
+    private List<Usuario> usuarios;
+    private List<Varietal> varietales;
+    private List<Vino> vinos;
+
+    // OBJETOS DE LA BD CARGADOS EN MEMORIA
     private BodegaRepository bodegaRepository;
     private LocalDateTime fechaActual;
     private List<Bodega> bodegasParaActualizar;
@@ -27,6 +40,32 @@ public class Gestor {
         this.bodegaRepository = bodegaRepository;
         this.interfazBD = interfazBD;
         this.interfazSistemaBodega = new InterfazSistemaBodega(interfazBD);
+        recuperarObjetos();
+    }
+
+    private void recuperarObjetos(){
+        this.maridajes = interfazBD.getMaridajes();
+        this.tiposUvas = interfazBD.getTiposUva();
+        this.usuarios = interfazBD.getUsuarios();
+        this.bodegas = interfazBD.getBodegas();
+        this.varietales = interfazBD.getVarietales(tiposUvas);
+        this.enofilos = interfazBD.getEnofilos(usuarios);
+        this.seguidos = interfazBD.getSiguiendos(enofilos, bodegas);
+        this.vinos = interfazBD.getVinos(maridajes, bodegas, varietales, enofilos, reseñas);
+        this.reseñas = interfazBD.getReseñas(vinos, enofilos);
+        interfazBD.reconstruirVinosDeEnofilo(enofilos, vinos);
+        andas();
+    }
+
+    private void andas(){
+// Imprimir todos los elementos de la lista vinos
+        System.out.println("Lista de Vinos:");
+        Iterator<Vino> iterator = vinos.iterator();
+        while(iterator.hasNext()){
+            System.out.println("Lista de:" + iterator.next());
+
+        }
+
     }
 
     //List<Bodega>

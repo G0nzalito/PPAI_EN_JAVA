@@ -14,4 +14,7 @@ public interface VinoRepository extends JpaRepository<Vino, Long> {
     @Query(value = "SELECT * FROM Vinos where cast(BODEGA as string) like :idBodega", nativeQuery = true)
     List<Object[]> findVinoByBodega(@Param("idBodega") String idBodega);
 
+    @Query(value = "SELECT * FROM Vinos", nativeQuery = true)
+    List<Object[]> getVinos();
+
 }

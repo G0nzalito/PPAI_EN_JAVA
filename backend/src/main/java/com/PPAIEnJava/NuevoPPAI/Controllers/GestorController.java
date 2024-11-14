@@ -1,4 +1,4 @@
-package com.PPAIEnJava.NuevoPPAI.Controlers;
+package com.PPAIEnJava.NuevoPPAI.Controllers;
 
 import com.PPAIEnJava.NuevoPPAI.Models.NoPersistent.Gestor;
 import com.PPAIEnJava.NuevoPPAI.Models.NoPersistent.VinoActualizado;

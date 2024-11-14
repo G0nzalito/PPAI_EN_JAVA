@@ -10,4 +10,7 @@ import java.util.List;
 public interface VarietalRepository extends JpaRepository<Varietal, Long> {
     @Query(value = "SELECT * FROM Varietal", nativeQuery = true)
     List<Object[]> getVarietales();
+
+    @Query(value = "SELECT * FROM Varietal_de_vino", nativeQuery = true)
+    List<Object[]> getVarietalesVino();
 }

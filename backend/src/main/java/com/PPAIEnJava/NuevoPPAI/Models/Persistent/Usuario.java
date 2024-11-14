@@ -13,7 +13,7 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long ID;
 
-    @Column(name = "CONTRASEÑA")
+    @Column(name = "CONTRASENIA")
     private String contraseña;
     @Column(name = "NOMBRE")
     private String nombre;
@@ -31,6 +31,17 @@ public class Usuario {
 
     public Usuario() {
 
+    }
+
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "ID=" + ID +
+                ", contraseña='" + contraseña + '\'' +
+                ", nombre='" + nombre + '\'' +
+                ", premium=" + premium +
+                ", cobroPremium='" + cobroPremium + '\'' +
+                '}';
     }
 
     public boolean esTuUsuario(Usuario usuario) {

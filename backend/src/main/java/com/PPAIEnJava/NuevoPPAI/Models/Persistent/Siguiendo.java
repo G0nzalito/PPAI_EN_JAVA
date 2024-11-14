@@ -48,6 +48,19 @@ public class Siguiendo {
 
     }
 
+    @Override
+    public String toString() {
+        return "Siguiendo{" +
+                "ID=" + ID +
+                ", fechaInicio=" + fechaInicio +
+                ", fechaFin=" + fechaFin +
+                ", BODEGA=" + (BODEGA == null ? BODEGA : BODEGA.getID()) +
+                ", SOMMELIER='" + SOMMELIER + '\'' +
+                ", ENOFILO=" + (ENOFILO == null ? ENOFILO : ENOFILO.getID()) +
+                ", ENOFILO_PROPIETARIO=" + ENOFILO_PROPIETARIO.getID() +
+                '}';
+    }
+
     public boolean sosDeBodega(Bodega bodega) {
         return this.BODEGA != null && this.BODEGA.equals(bodega);
     }

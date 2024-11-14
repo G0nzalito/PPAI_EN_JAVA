@@ -73,6 +73,17 @@ public class Enofilo {
         // Implementación pendiente
     }
 
+    @Override
+    public String toString() {
+        return "Enofilo{" +
+                "usuario=" + usuario +
+                ", nombre='" + nombre + '\'' +
+                ", imagenPerfil='" + imagenPerfil + '\'' +
+                ", apellido='" + apellido + '\'' +
+                ", ID=" + ID +
+                '}';
+    }
+
     public void enviarNotificacion() {
         // Implementación pendiente
     }
