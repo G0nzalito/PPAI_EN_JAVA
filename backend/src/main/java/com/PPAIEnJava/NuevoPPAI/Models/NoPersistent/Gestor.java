@@ -40,13 +40,7 @@ public class Gestor {
     }
 
     private List<Bodega> buscarBodegasConActualizacion(){
-        List<TipoUva> tipoUva= interfazBD.getTiposUva();
-        List<Varietal> varietals = interfazBD.getVarietales(tipoUva);
-        for (Varietal varietal : varietals){
-            System.out.println(varietal);
-        }
-
-        List<Bodega> bodegas = bodegaRepository.findAll();
+        List<Bodega> bodegas = interfazBD.getBodegas();
         List<Bodega> bodegasParaActualizacion = new ArrayList<>();
         for (Bodega bodega : bodegas) {
             if (bodega.esTiempoDeActualizar(fechaActual)){

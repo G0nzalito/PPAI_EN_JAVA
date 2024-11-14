@@ -14,6 +14,72 @@ public class Persistencia {
 
     public Persistencia(){}
 
+    public List<Siguiendo> reconstruirSiguiendos(List<Object[]> siguiendoAReconstruir, List<Enofilo> enofilos, List<Bodega> bodegas){
+
+        List<Siguiendo> siguiendos = new ArrayList<>();
+
+        for(Object[] siguiendo : siguiendoAReconstruir){
+
+            Enofilo enofiloPropietario = enofilos.stream().filter(en -> (Integer) siguiendo[6] == en.getID()).findFirst().get();
+
+            Enofilo enofiloSiguiendo = null;
+            String SommelierSiguiendo = "";
+            Bodega bodegaSiguiendo = null;
+
+            if(siguiendo[3] != null){
+
+                bodegaSiguiendo = bodegas.stream().filter(bod -> (Integer) siguiendo[3] == bod.getID()).findFirst().get();
+                SommelierSiguiendo = "";
+
+            } else if (siguiendo[4] != null) {
+                enofiloSiguiendo = enofilos.stream().filter(en -> (Integer) siguiendo[4] == en.getID()).findFirst().get();
+                SommelierSiguiendo = "";
+
+            }else{
+                SommelierSiguiendo = (String) siguiendo[5];
+            }
+
+            Siguiendo s = new Siguiendo();
+            s.setID((Integer) siguiendo[0]);
+            s.setFechaInicio(((Timestamp) siguiendo[1]).toLocalDateTime());
+            s.setFechaFin(((Timestamp) siguiendo[2]).toLocalDateTime());
+            s.setENOFILO_PROPIETARIO(enofiloPropietario);
+            s.setBODEGA(bodegaSiguiendo);
+            s.setENOFILO(enofiloSiguiendo);
+            s.setSOMMELIER(SommelierSiguiendo);
+
+            siguiendos.add(s);
+
+            if (enofiloPropietario.getSeguido() == null){
+                List<Siguiendo> siguiendoEnofilo = new ArrayList<>();
+                siguiendoEnofilo.add(s);
+                enofiloPropietario.setSeguido(siguiendoEnofilo);
+            }else {
+                enofiloPropietario.getSeguido().add(s);
+            }
+        }
+        return siguiendos;
+    }
+
+    public List<Enofilo> reconstruirEnofilos(List<Object[]> enofilosAReconstruir, List<Usuario> usuarios){
+        List<Enofilo> enofilos = new ArrayList<>();
+
+        for (Object[] enofilo : enofilosAReconstruir) {
+
+            Usuario usuarioAAgregar = usuarios.stream().filter(usu -> (Integer) enofilo[4] == usu.getID()).findFirst().get();
+
+            Enofilo en = new Enofilo();
+            en.setID((Integer) enofilo[0]);
+            en.setApellido((String) enofilo[1]);
+            en.setImagenPerfil((String) enofilo[2]);
+            en.setNombre((String) enofilo[3]);
+            en.setUsuario(usuarioAAgregar);
+
+            enofilos.add(en);
+        }
+        return enofilos;
+    }
+
     public List<Varietal>reconstruirVarietal(List<TipoUva> tipoUvas, List<Object[]> varietalesAReconstruir){
         List<Varietal> varietales = new ArrayList<>();
         Iterator<TipoUva> iterator = tipoUvas.iterator();
@@ -81,5 +147,34 @@ public class Persistencia {
             vinos.add(v);
         }
         return vinos;
+    }
+
+    public List<Reseña> reconstruirReseñas(List<Vino> vinos, List<Enofilo> enofilos, List<Object[]> reseñasAReconstruir){
+        List<Reseña> reseñas = new ArrayList<>();
+
+
+        for (Object[] reseña : reseñasAReconstruir){
+            Vino vino = vinos.stream().filter(v -> (Integer) reseña[5] == v.getID()).findFirst().orElse(null);
+
+            Enofilo enofilo = enofilos.stream().filter(en -> (Integer) reseña[6] == en.getID()).findFirst().orElse(null);
+            Reseña reseña1 = new Reseña();
+            reseña1.setID((Integer) reseña[0]);
+            reseña1.setCOMENTARIO((String) reseña[1]);
+            reseña1.setES_PREMIUM((Boolean) reseña[2]);
+            reseña1.setFECHA_RESEÑA(((Timestamp) reseña[3]).toLocalDateTime());
+            reseña1.setPUNTAJE((Integer) reseña[4]);
+            reseña1.setID_VINO(vino);
+            reseña1.setENOFILO_PROPIETARIO(enofilo);
+
+            reseñas.add(reseña1);
+            if (vino.getReseñas() == null){
+                List<Reseña> reseñasVino = new ArrayList<>();
+                reseñasVino.add(reseña1);
+                vino.setReseñas(reseñasVino);
+            }else {
+                vino.getReseñas().add(reseña1);
+            }
+        }
+        return reseñas;
     }
 }

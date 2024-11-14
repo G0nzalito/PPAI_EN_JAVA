@@ -68,5 +68,9 @@ public class InterfazBD {
         }
     }
 
+    public List<Bodega> getBodegas(){
+        return bodegaRepository.findAll();
+    }
+
 
 }
