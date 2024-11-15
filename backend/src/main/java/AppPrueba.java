@@ -33,7 +33,7 @@ public class AppPrueba {
         System.out.println( reseña.getFECHA_RESEÑA());
         System.out.println(reseña.esPremium());
         System.out.println(vino.calcularRanking());
-        System.out.println(vino.sosVinoAActualizar(Vinos));
+//<        System.out.println(vino.sosVinoAActualizar(Vinos));>
         System.out.println(Vinos);
 
     }

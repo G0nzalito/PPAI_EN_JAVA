@@ -77,12 +77,12 @@ public class Gestor {
         return bodegasParaActualizacion;
     }
 
-    public void tomarSeleccionDeBodega(String nombreBodega){
+    public List<VinoActualizado> tomarSeleccionDeBodega(String nombreBodega){
         long idBodega = bodegaRepository.recoverIdByNombre(nombreBodega);
         this.bodegaAActualzar = bodegaRepository.findById(idBodega).get();
         List<VinoRemoto> vinosAActualizar = obtenerActualizacionesVinos(idBodega);
-        List<Vino> vinosDeBodega = vinos.stream().filter(v -> v.esDeBodega(bodegaAActualzar.getNombre())).toList();
-        this.bodegaAActualzar.actualizarVinos(vinosAActualizar, vinosDeBodega, maridajes);
+
+        return this.bodegaAActualzar.actualizarVinos(vinosAActualizar, vinos, maridajes, varietales);
     }
 
     private List<VinoRemoto> obtenerActualizacionesVinos(Long idBodega){

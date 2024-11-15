@@ -9,6 +9,8 @@ import lombok.Setter;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.function.BinaryOperator;
 
@@ -81,9 +83,9 @@ public class Bodega implements Serializable {
         return vinosBodega;
     }
 
-    public Vino crearVino(Vino vinoACrear, List<Maridaje> dataMaridajes) {
+    public Vino crearVino(VinoRemoto vinoACrear, List<Maridaje> dataMaridajes, List<Varietal> varietalesBD) {
         List<Maridaje> maridaje = this.buscarMaridaje(vinoACrear, dataMaridajes);
-        List<Varietal> varietales = this.buscarVarietales(vinoACrear);
+        List<Varietal> varietales = this.buscarVarietales(vinoACrear, varietalesBD);
 
         return new Vino(
                 vinoACrear.getNOMBRE(),
@@ -95,15 +97,16 @@ public class Bodega implements Serializable {
                 vinoACrear.getPRECIOARS(),
                 maridaje,
                 varietales,
-                vinoACrear.getReseñas()
+                null
         );
     }
 
-    public List<Maridaje> buscarMaridaje(Vino vinoACrear, List<Maridaje> dataMaridajes) {
+    public List<Maridaje> buscarMaridaje(VinoRemoto vinoACrear, List<Maridaje> dataMaridajes) {
         List<Maridaje> maridajesADevolver = new ArrayList<>();
-        for (Maridaje maridajeAAsignar : vinoACrear.getMaridajesVino()) {
+        List<String> maridajesABuscar = Arrays.stream(vinoACrear.getMaridajes().split(",")).toList();
+        for (String maridajeAAsignar : maridajesABuscar) {
             for (Maridaje maridajeEnBd : dataMaridajes) {
-                if (maridajeEnBd.sosMaridaje(maridajeAAsignar.getNOMBRE())) {
+                if (maridajeEnBd.sosMaridaje(maridajeAAsignar)) {
                     maridajesADevolver.add(maridajeEnBd);
                     break;
                 }
@@ -112,58 +115,74 @@ public class Bodega implements Serializable {
         return maridajesADevolver;
     }
 
-    public List<Varietal> buscarVarietales(Vino vinoACrear) {
-        List<Varietal> Varietales = new ArrayList<>();
-        for (Varietal varietal : vinoACrear.getVarietalesVino()) {
-            Varietales.add(new Varietal(varietal.getID_UVA(), varietal.getPORCENTAJE()));
+    public List<Varietal> buscarVarietales(VinoRemoto vinoACrear, List<Varietal> varietales) {
+        List<Varietal> varietalesADevolver = new ArrayList<>();
+        List<String> varitalesABuscar = Arrays.stream((vinoACrear.getVarietales().split(","))).toList();
+        Iterator<String> ItVarietales = varitalesABuscar.iterator();
+        while (ItVarietales.hasNext()) {
+            String nombreVarietal = ItVarietales.next();
+            String porcentajeVarietal = ItVarietales.next().trim();
+            for (Varietal varietal : varietales) {
+                if (varietal.esDeTipoUva(nombreVarietal) && varietal.getPORCENTAJE() == Integer.parseInt(porcentajeVarietal)) {
+                    varietalesADevolver.add(varietal);
+                }
+            }
+
         }
-        return Varietales;
+        return varietalesADevolver;
     }
 
-    public List<VinoActualizado> actualizarVinos(List<VinoRemoto> vinosAActualizar, List<Vino> dataVinoEnBD, List<Maridaje> dataMaridajes) {
+    public List<VinoActualizado> actualizarVinos(List<VinoRemoto> vinosAActualizar, List<Vino> dataVinoEnBD, List<Maridaje> dataMaridajes, List<Varietal> varietalesBD) {
+
+        List<Vino> vinosDeBodega = dataVinoEnBD.stream().filter(v -> v.esDeBodega(this.getNombre())).toList();
+
         List<VinoActualizado> vinosActualizados = new ArrayList<>();
 
-        for (Vino vino : dataVinoEnBD) {
-            if (vino.sosVinoAActualizar(dataVinoEnBD)) {
-                Vino vinoAActualizar = dataVinoEnBD.stream()
-                        .filter(v -> v.esTuNombre(vino.getNOMBRE()))
-                        .findFirst()
-                        .orElse(null);
+        for (VinoRemoto vino : vinosAActualizar) {
+            Iterator<Vino> itVinosBd = vinosDeBodega.iterator();
+            boolean existia = false;
+            while (itVinosBd.hasNext()) {
+                Vino vinoBD = itVinosBd.next();
+                System.out.println(vinoBD);
+                if (vinoBD.sosVinoAActualizar(vino.getNOMBRE())){
+                    System.out.println("entré");
+                    vinoBD.setPRECIOARS(vino.getPRECIOARS());
+                    vinoBD.setIMAGEN_ETIQUETA(vino.getIMAGEN_ETIQUETA());
+                    vinoBD.setFECHA_ACTUALIZACION(vino.getFECHA_ACTUALIZACION());
+                    vinoBD.setNOTA_CATA(vino.getNOTA_CATA());
 
-                if (vinoAActualizar != null) {
-                    List<String> varietalAMostrar = vino.getVarietalesAMostrar();
-
+                    List<String> varietalAMostrar = new ArrayList<>();
+                    for (Varietal varietal : vinoBD.getVarietalesVino()) {
+                        String nombreTipoUva = varietal.conocerTipoDeUva().getNOMBRE();
+                        int porcentaje = varietal.getPORCENTAJE();
+                        varietalAMostrar.add(nombreTipoUva + ": " + porcentaje + "%");
+                    }
                     vinosActualizados.add(new VinoActualizado(
-                            vino,
+                            vinoBD,
                             "Actualizado",
                             varietalAMostrar
+
                     ));
-
-                    vino.setPRECIOARS(vinoAActualizar.getPRECIOARS());
-                    vino.setIMAGEN_ETIQUETA(vinoAActualizar.getIMAGEN_ETIQUETA());
-                    vino.setFECHA_ACTUALIZACION(vinoAActualizar.getFECHA_ACTUALIZACION());
-                    vino.setNOTA_CATA(vinoAActualizar.getNOTA_CATA());
+                    existia = true;
+                    break;
                 }
-            } else {
-                this.crearVino(vino, dataMaridajes);
-
+            }
+            if (!existia){
+                Vino vinoNuevo = this.crearVino(vino, dataMaridajes, varietalesBD);
+                dataVinoEnBD.add(vinoNuevo);
                 List<String> varietalAMostrar = new ArrayList<>();
-                for (Varietal varietal : vino.getVarietalesVino()) {
+                for (Varietal varietal : vinoNuevo.getVarietalesVino()) {
                     String nombreTipoUva = varietal.conocerTipoDeUva().getNOMBRE();
                     int porcentaje = varietal.getPORCENTAJE();
                     varietalAMostrar.add(nombreTipoUva + ": " + porcentaje + "%");
                 }
-
                 vinosActualizados.add(new VinoActualizado(
-                        vino,
+                        vinoNuevo,
                         "Creado",
                         varietalAMostrar
                 ));
-
-                dataVinoEnBD.add(vino);
             }
         }
-
         return vinosActualizados;
     }
 

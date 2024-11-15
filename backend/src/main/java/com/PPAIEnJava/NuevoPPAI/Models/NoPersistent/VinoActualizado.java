@@ -22,7 +22,7 @@ public class VinoActualizado {
     @Override
     public String toString() {
         return "VinoActualizado{" +
-                "vinoAMostrar=" + vinoAMostrar +
+                "vinoAMostrar=" + vinoAMostrar.getPRECIOARS() +
                 ", estado='" + estado + '\'' +
                 ", varietalesAMostrar=" + varietalesAMostrar +
                 '}';

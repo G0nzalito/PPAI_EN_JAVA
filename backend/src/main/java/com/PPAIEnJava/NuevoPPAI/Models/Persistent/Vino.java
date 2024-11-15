@@ -58,8 +58,8 @@ public class Vino {
     }
 
 
-    public boolean sosVinoAActualizar(List<Vino> dataVinoEnBD) {
-        return dataVinoEnBD.stream().anyMatch(v -> v.NOMBRE.equals(this.NOMBRE));
+    public boolean sosVinoAActualizar(String nombreVino) {
+        return this.NOMBRE.equals(nombreVino);
     }
 
     @Override

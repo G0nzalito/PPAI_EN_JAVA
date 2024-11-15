@@ -37,37 +37,8 @@ public class GestorController {
     @GetMapping(path = "/resultadoTablas")
     public List<VinoActualizado> resultadoTablas(@RequestParam String bodegaSeleccionada){
 
-
-
         List<VinoActualizado> vinoActualizados = new ArrayList<>();
-        gestor.tomarSeleccionDeBodega(bodegaSeleccionada);
-
-
-        Bodega bodega = new Bodega("Historia", "Nombre", "Descripcion", 4, LocalDateTime.now(), 34);
-        TipoUva uva = new TipoUva("Soy una uva", "Soy una descripcion");
-        Varietal varietal = new Varietal(uva, 30);
-        List<Varietal> Varietales = new ArrayList<>();
-        Varietales.add(varietal);
-
-        Maridaje maridaje = new Maridaje("Maridaje", "Soy una descripcion");
-        List<Maridaje> Maridajes = new ArrayList<>();
-        Maridajes.add(maridaje);
-        Reseña reseña = new Reseña("Comento", true, LocalDateTime.now(), 13, null);
-        List<Reseña> Reseñas = new ArrayList<>();
-        Reseñas.add(reseña);
-        Vino vino1 = new Vino("soy un Vino!", bodega, 2, LocalDateTime.now(), "Imagen de vino", "Soy una nota", 2, Maridajes, Varietales, Reseñas);
-
-        Vino vino2 = new Vino("soy un Vinaso!", bodega, 2003, LocalDateTime.now(), "Imagen de vino nuevo", "Soy una nota increible", 250, Maridajes, Varietales, Reseñas);
-
-        List<String> varietalAMostrar = getVarietalesAMostrar(Varietales);
-
-        VinoActualizado vinoAMostrar1 = new VinoActualizado(vino1, "Creado", varietalAMostrar);
-        VinoActualizado vinoAMostrar2 = new VinoActualizado(vino2, "Actualizado", varietalAMostrar);
-
-        vinoActualizados.add(vinoAMostrar1);
-        vinoActualizados.add(vinoAMostrar2);
-
-        return vinoActualizados;
+        return gestor.tomarSeleccionDeBodega(bodegaSeleccionada);
 
     }
 

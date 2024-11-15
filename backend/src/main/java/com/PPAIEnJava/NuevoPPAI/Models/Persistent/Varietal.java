@@ -42,9 +42,11 @@ public class Varietal {
         return this.ID_UVA;
     }
 
-    public boolean esDeTipoUva(TipoUva tipoUva) {
-        return this.ID_UVA.getNOMBRE().equalsIgnoreCase(tipoUva.getNOMBRE());
+    public boolean esDeTipoUva(String tipoUva) {
+        return this.ID_UVA.getNOMBRE().equalsIgnoreCase(tipoUva);
     }
+
+
 
     public String mostrarPorcentaje() {
         return this.PORCENTAJE + "%";
