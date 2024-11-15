@@ -10,7 +10,6 @@ import { BrowserRouter } from "react-router-dom";
 import ErrorPage from "./Components/ErrorPage.tsx";
 
 createRoot(document.getElementById("root")!).render(
-  <StrictMode>
     <BrowserRouter>
       <Switch>
         <Route path="/" component={App} />
@@ -20,5 +19,4 @@ createRoot(document.getElementById("root")!).render(
         <Route path="*" component={ErrorPage} />
       </Switch>
     </BrowserRouter>
-  </StrictMode>
 );
