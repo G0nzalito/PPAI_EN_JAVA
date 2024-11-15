@@ -2,15 +2,15 @@ package com.PPAIEnJava.NuevoPPAI.Models.NoPersistent;
 
 import com.PPAIEnJava.NuevoPPAI.Models.Persistent.*;
 import com.PPAIEnJava.NuevoPPAI.Repositories.*;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class InterfazBD {
+    private static InterfazBD instancia;
+
     private BodegaRepository bodegaRepository;
     private VinoRemotoRepositroy vinoRemotoRepository;
     private MaridajeRepository maridajeRepository;
@@ -24,9 +24,29 @@ public class InterfazBD {
     private ReseñaRepository reseñaRepository;
     private VinosDeEnofiloRepository vinosDeEnofiloRepository;
 
+    private InterfazBD() {}
 
-    @Autowired
-    private InterfazBD(BodegaRepository bodegaRepository, VinoRemotoRepositroy vinoRemotoRepository, MaridajeRepository maridajeRepository, VinoRepository vinoRepository, TipoUvaRepository tipoUvaRepository, UsuarioRepository usuarioRepository, VarietalRepository varietalRepository, EnofiloRepository enofiloRepository, SiguiendoRepository siguiendoRepository, ReseñaRepository reseñaRepository, VinosDeEnofiloRepository vinosDeEnofiloRepository, Persistencia persistencia) {
+    public static synchronized InterfazBD getInstancia() {
+        if (instancia == null) {
+            instancia = new InterfazBD();
+        }
+        return instancia;
+    }
+
+    public void initialize(BodegaRepository bodegaRepository,
+                           VinoRemotoRepositroy vinoRemotoRepository,
+                           MaridajeRepository maridajeRepository,
+                           VinoRepository vinoRepository,
+                           TipoUvaRepository tipoUvaRepository,
+                           UsuarioRepository usuarioRepository,
+                           VarietalRepository varietalRepository,
+                           Persistencia persistencia,
+                           EnofiloRepository enofiloRepository,
+                           SiguiendoRepository siguiendoRepository,
+                           ReseñaRepository reseñaRepository,
+                           VinosDeEnofiloRepository vinosDeEnofiloRepository) {
+
+        if (this.bodegaRepository == null) {
             this.bodegaRepository = bodegaRepository;
             this.vinoRemotoRepository = vinoRemotoRepository;
             this.maridajeRepository = maridajeRepository;
@@ -34,13 +54,17 @@ public class InterfazBD {
             this.tipoUvaRepository = tipoUvaRepository;
             this.usuarioRepository = usuarioRepository;
             this.varietalRepository = varietalRepository;
+            this.persistencia = persistencia;
             this.enofiloRepository = enofiloRepository;
             this.siguiendoRepository = siguiendoRepository;
             this.reseñaRepository = reseñaRepository;
             this.vinosDeEnofiloRepository = vinosDeEnofiloRepository;
-            this.persistencia = persistencia;
+        }
     }
 
+    public List<VinoRemoto> getVinosEnRemoto(String idBodegaStr){
+        return vinoRemotoRepository.findVinoByBodega(idBodegaStr);
+    }
 
     public long getBodegaIdByNombre(String nombreBodega){
         return bodegaRepository.recoverIdByNombre(nombreBodega);
@@ -48,10 +72,6 @@ public class InterfazBD {
 
     public Bodega findBodegaById(long idBodega){
         return bodegaRepository.findById(idBodega).get();
-    }
-
-    public List<VinoRemoto> getVinosEnRemoto(String idBodegaStr){
-        return vinoRemotoRepository.findVinoByBodega(idBodegaStr);
     }
 
     public List<Maridaje> getMaridajes(){

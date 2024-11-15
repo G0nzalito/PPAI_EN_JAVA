@@ -27,6 +27,21 @@ public class Gestor {
 
     // OBJETOS DE LA BD CARGADOS EN MEMORIA
 
+    // INYECCIONES DE LOS REPOSITORIOS DE LOS OBJETOS
+
+    private BodegaRepository bodegaRepository;
+    private VinoRemotoRepositroy vinoRemotoRepository;
+    private MaridajeRepository maridajeRepository;
+    private VinoRepository vinoRepository;
+    private TipoUvaRepository tipoUvaRepository;
+    private UsuarioRepository usuarioRepository;
+    private VarietalRepository varietalRepository;
+    private EnofiloRepository enofiloRepository;
+    private SiguiendoRepository siguiendoRepository;
+    private ReseñaRepository reseñaRepository;
+    private VinosDeEnofiloRepository vinosDeEnofiloRepository;
+
+    // INYECCIONES DE LOS REPOSITORIOS DE LOS OBJETOS
     private LocalDateTime fechaActual;
     private List<Bodega> bodegasParaActualizar;
     private Bodega bodegaAActualzar;
@@ -34,11 +49,7 @@ public class Gestor {
     private InterfazBD interfazBD;
     private InterfazNotificacionesPush notificacionesPush;
 
-    @Autowired
-    public Gestor(InterfazBD interfazBD ) {
-        this.interfazBD = interfazBD;
-        this.interfazSistemaBodega = new InterfazSistemaBodega(interfazBD);
-        recuperarObjetos();
+    public Gestor() {
     }
 
     private void recuperarObjetos(){
@@ -56,6 +67,14 @@ public class Gestor {
 
     //List<Bodega>
     public List<Bodega> opcionImportarActualizaciones(){
+        // Buscamos el singleton de la interfaz de la BD
+        this.interfazBD = InterfazBD.getInstancia();
+        //Creamos la interfaz del sistema de bodegas para luego poder "acceder a los vinos de esa bodega"
+        this.interfazSistemaBodega = new InterfazSistemaBodega(interfazBD);
+        // cargamos todos los objetos de la BD a la memoria
+        recuperarObjetos();
+
+        //Empieza la ejecución de la logica de negocio
         this.fechaActual = LocalDateTime.now();
         return buscarBodegasConActualizacion();
     }
