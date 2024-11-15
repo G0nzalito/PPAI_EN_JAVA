@@ -1,6 +1,7 @@
 import useSearchParams from "../Hooks/Hooks";
 import { getBodegasActualizadas } from "../Services/services";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface Reseña {
   puntaje: number;
@@ -9,6 +10,8 @@ interface Reseña {
 export default function ActualizarBodegas() {
   const [bodegasActualizada, setBodegasActualizada] = useState<[]>([]);
   const [loading, setLoading] = useState<boolean>(true); // Para manejar el estado de carga
+  const navigate = useNavigate();
+
 
   const { bodega } = useSearchParams();
   console.log(bodega);
@@ -22,6 +25,10 @@ export default function ActualizarBodegas() {
       .finally(() => setLoading(false)); // Finalizamos el estado de carga
   }, [bodega]);
 
+  const handleVolver = () => {
+    navigate("/inicio");
+  };
+
   return (
     <div>
       <header>
@@ -33,8 +40,8 @@ export default function ActualizarBodegas() {
       <main>
         {loading ? (
           <p>Cargando datos...</p> // Mensaje mientras carga
-        ) : bodegasActualizada.length === 0 ? (
-          <p>No hay bodegas disponibles para actualizar.</p> // Mensaje cuando no hay bodegas
+        ) : bodega === "Los robles" ? (
+          <h2>Ha ocurrido un error conectando al servicio de la bodega</h2>// Mensaje cuando no hay bodegas
         ) : (
           <table className="content-table w-full">
             <thead>
@@ -55,27 +62,26 @@ export default function ActualizarBodegas() {
             <tbody id="tablaVinosResumen">
               {bodegasActualizada.map((bodega) => {
                 return (
-                  // @ts-expect-error no te hagas problema ts
-                  <tr key={bodega.vinoAMostrar.id}>
+                  <tr key={0}>
                     <th scope="row">
                       {
                         //@ts-expect-error no te preocupes ts
-                        bodega.vinoAMostrar.bodega.nombre
+                        bodega.nombreBodega
                       }
                     </th>
-                    <td>{bodega.vinoAMostrar.nombre}</td>
-                    <td>{bodega.vinoAMostrar.añada}</td>
+                    <td>{bodega.nombreVino}</td>
+                    <td>{bodega.añada}</td>
                     <td>
                       {new Date(
-                        bodega.vinoAMostrar.fecha_ACTUALIZACION
+                        bodega.fechaActualizacion
                       ).toLocaleDateString()}
                     </td>
-                    <td>{bodega.vinoAMostrar.imagen_ETIQUETA}</td>
-                    <td>{bodega.vinoAMostrar.nota_CATA}</td>
-                    <td>${bodega.vinoAMostrar.precioars}</td>
-                    <td>{5}</td>
-                    <td>{"hola"}</td>
-                    <td>{"sdkasj"}</td>
+                    <td>{bodega.imagen_etiqueta}</td>
+                    <td>{bodega.nota_cata}</td>
+                    <td>${bodega.precioArs}</td>
+                    <td>{bodega.puntaje}</td>
+                    <td>{bodega.varietalesAMostrar}</td>
+                    <td>{bodega.maridajesAActualizar}</td>
                     <td>{bodega.estado}</td>
                   </tr>
                 );
@@ -83,6 +89,12 @@ export default function ActualizarBodegas() {
             </tbody>
           </table>
         )}
+
+        <div className="px-4 py-4 d-flex justify-content-between">
+          <button className="btn btn-dark" onClick={handleVolver}>
+            Volver a pantalla principal
+          </button>
+        </div>
       </main>
       <footer className=" flex w-full bg-danger-subtle p-10">
         <div className="container text-center ">

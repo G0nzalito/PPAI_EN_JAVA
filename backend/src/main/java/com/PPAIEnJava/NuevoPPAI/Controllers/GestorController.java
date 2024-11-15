@@ -36,8 +36,6 @@ public class GestorController {
 
     @GetMapping(path = "/resultadoTablas")
     public List<VinoActualizado> resultadoTablas(@RequestParam String bodegaSeleccionada){
-
-        List<VinoActualizado> vinoActualizados = new ArrayList<>();
         return gestor.tomarSeleccionDeBodega(bodegaSeleccionada);
 
     }

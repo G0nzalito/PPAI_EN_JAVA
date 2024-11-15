@@ -196,4 +196,8 @@ public class Persistencia {
             }
         }
     }
+
+    public void persistirVinos(List<Vino> vinosAPersistir){
+
+    }
 }

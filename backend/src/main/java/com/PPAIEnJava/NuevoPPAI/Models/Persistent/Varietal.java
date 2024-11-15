@@ -16,7 +16,7 @@ public class Varietal {
     private long ID;
 
     @OneToOne
-    @JoinColumn(referencedColumnName = "ID")
+    @JoinColumn(referencedColumnName = "ID", name = "ID_UVA")
     private TipoUva ID_UVA;
 
     private int PORCENTAJE;

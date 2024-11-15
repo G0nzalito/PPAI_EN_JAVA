@@ -17,4 +17,7 @@ public interface VinoRepository extends JpaRepository<Vino, Long> {
     @Query(value = "SELECT * FROM Vinos", nativeQuery = true)
     List<Object[]> getVinos();
 
+    @Query(value = "SELECT MAX(V.ID) FROM Vino V ")
+    Integer getMaxId();
+
 }

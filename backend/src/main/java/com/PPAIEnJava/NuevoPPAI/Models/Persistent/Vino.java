@@ -20,7 +20,7 @@ public class Vino {
     private String NOMBRE;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(referencedColumnName = "ID")
+    @JoinColumn(referencedColumnName = "ID", name = "BODEGA")
     private Bodega BODEGA;
 
     @Column(name = "ANIADA")

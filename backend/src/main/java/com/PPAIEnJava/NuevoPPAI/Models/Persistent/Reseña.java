@@ -19,13 +19,13 @@ public class Reseña {
 
     private Boolean ES_PREMIUM;
 
-
+    @Column(name = "FECHA_RESENIA")
     private LocalDateTime FECHA_RESEÑA;
 
     private int PUNTAJE;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(referencedColumnName = "ID")
+    @JoinColumn(referencedColumnName = "ID", name = "ID_VINO")
     private Vino ID_VINO;
 
     @ManyToOne

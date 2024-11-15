@@ -143,7 +143,6 @@ public class Bodega implements Serializable {
             boolean existia = false;
             while (itVinosBd.hasNext()) {
                 Vino vinoBD = itVinosBd.next();
-                System.out.println(vinoBD);
                 if (vinoBD.sosVinoAActualizar(vino.getNOMBRE())){
                     System.out.println("entré");
                     vinoBD.setPRECIOARS(vino.getPRECIOARS());
@@ -151,17 +150,29 @@ public class Bodega implements Serializable {
                     vinoBD.setFECHA_ACTUALIZACION(vino.getFECHA_ACTUALIZACION());
                     vinoBD.setNOTA_CATA(vino.getNOTA_CATA());
 
-                    List<String> varietalAMostrar = new ArrayList<>();
+                    StringBuilder varietalAMostrar = new StringBuilder();
                     for (Varietal varietal : vinoBD.getVarietalesVino()) {
                         String nombreTipoUva = varietal.conocerTipoDeUva().getNOMBRE();
                         int porcentaje = varietal.getPORCENTAJE();
-                        varietalAMostrar.add(nombreTipoUva + ": " + porcentaje + "%");
+                        varietalAMostrar.append(nombreTipoUva).append(": ").append(porcentaje).append("%");
+                    }
+                    StringBuilder maridajeAMostrar = new StringBuilder();
+                    for (Maridaje maridaje : vinoBD.getMaridajesVino()) {
+                        String nombreMaridaje = maridaje.getNOMBRE();
+                        maridajeAMostrar.append(nombreMaridaje).append(",");
                     }
                     vinosActualizados.add(new VinoActualizado(
-                            vinoBD,
+                            vinoBD.getNOMBRE(),
+                            vinoBD.getBODEGA().getNombre(),
+                            String.valueOf(vinoBD.getAÑADA()),
+                            vinoBD.getFECHA_ACTUALIZACION().toString(),
+                            vinoBD.getIMAGEN_ETIQUETA(),
+                            vinoBD.getNOTA_CATA(),
+                            vinoBD.getPRECIOARS(),
                             "Actualizado",
-                            varietalAMostrar
-
+                            varietalAMostrar.toString(),
+                            maridajeAMostrar.toString(),
+                            vinoBD.calcularRanking()
                     ));
                     existia = true;
                     break;
@@ -170,19 +181,33 @@ public class Bodega implements Serializable {
             if (!existia){
                 Vino vinoNuevo = this.crearVino(vino, dataMaridajes, varietalesBD);
                 dataVinoEnBD.add(vinoNuevo);
-                List<String> varietalAMostrar = new ArrayList<>();
+                StringBuilder varietalAMostrar = new StringBuilder();
                 for (Varietal varietal : vinoNuevo.getVarietalesVino()) {
                     String nombreTipoUva = varietal.conocerTipoDeUva().getNOMBRE();
                     int porcentaje = varietal.getPORCENTAJE();
-                    varietalAMostrar.add(nombreTipoUva + ": " + porcentaje + "%");
+                    varietalAMostrar.append(nombreTipoUva).append(": ").append(porcentaje).append("%");
+                }
+                StringBuilder maridajeAMostrar = new StringBuilder();
+                for (Maridaje maridaje : vinoNuevo.getMaridajesVino()) {
+                    String nombreMaridaje = maridaje.getNOMBRE();
+                    maridajeAMostrar.append(nombreMaridaje).append(",");
                 }
                 vinosActualizados.add(new VinoActualizado(
-                        vinoNuevo,
+                        vinoNuevo.getNOMBRE(),
+                        vinoNuevo.getBODEGA().getNombre(),
+                        String.valueOf(vinoNuevo.getAÑADA()),
+                        vinoNuevo.getFECHA_ACTUALIZACION().toString(),
+                        vinoNuevo.getIMAGEN_ETIQUETA(),
+                        vinoNuevo.getNOTA_CATA(),
+                        vinoNuevo.getPRECIOARS(),
                         "Creado",
-                        varietalAMostrar
+                        varietalAMostrar.toString(),
+                        maridajeAMostrar.toString(),
+                        0
                 ));
             }
         }
+
         return vinosActualizados;
     }
 

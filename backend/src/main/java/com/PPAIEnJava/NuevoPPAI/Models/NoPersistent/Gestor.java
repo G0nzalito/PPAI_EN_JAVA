@@ -34,6 +34,7 @@ public class Gestor {
     private Bodega bodegaAActualzar;
     private InterfazSistemaBodega interfazSistemaBodega;
     private InterfazBD interfazBD;
+    private InterfazNotificacionesPush notificacionesPush;
 
     @Autowired
     public Gestor(BodegaRepository bodegaRepository, VinoRemotoRepositroy vinoRemotoRepository, InterfazBD interfazBD) {
@@ -82,12 +83,42 @@ public class Gestor {
         this.bodegaAActualzar = bodegaRepository.findById(idBodega).get();
         List<VinoRemoto> vinosAActualizar = obtenerActualizacionesVinos(idBodega);
 
-        return this.bodegaAActualzar.actualizarVinos(vinosAActualizar, vinos, maridajes, varietales);
+        List<VinoActualizado> vinosActualizados = this.bodegaAActualzar.actualizarVinos(vinosAActualizar, vinos, maridajes, varietales);
+
+        this.bodegaAActualzar.setFECHA_ULTIMA_ACTUALIZACION(fechaActual);
+
+        notificarEnofilosSuscriptos();
+
+        persistirObjetosNuevos();
+
+        return vinosActualizados;
     }
 
     private List<VinoRemoto> obtenerActualizacionesVinos(Long idBodega){
-        List<VinoRemoto> vinosAActualizar = interfazSistemaBodega.obtenerActualizacionesVinos(idBodega);
-        return vinosAActualizar;
+        return interfazSistemaBodega.obtenerActualizacionesVinos(idBodega);
+    }
+
+    private void notificarEnofilosSuscriptos(){
+        List<String> enofilosANotificar = new ArrayList<>();
+        for (Enofilo enofilo : enofilos) {
+            if(enofilo.estaSuscriptoABodega(bodegaAActualzar)){
+                enofilosANotificar.add(enofilo.obtenerNombreUsuario());
+            }
+        }
+        String notificacion = generarNotificacion();
+        InterfazNotificacionesPush interfazNotificacionesPush = new InterfazNotificacionesPush(enofilosANotificar, notificacion);
+        interfazNotificacionesPush.notificarActualizacionBodega();
+
+    }
+
+    private String generarNotificacion(){
+        StringBuilder notificacion = new StringBuilder();
+        notificacion.append("Hay novedades en la bodega ").append(bodegaAActualzar.getNombre()).append(" disponibles en la app");
+        return notificacion.toString();
+    }
+
+    private void persistirObjetosNuevos(){
+        interfazBD.persistirVinos(vinos);
     }
 
 }

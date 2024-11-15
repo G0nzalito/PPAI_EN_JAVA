@@ -92,8 +92,8 @@ public class InterfazBD {
 
     }
 
-    public void getVinosOfBodega(long idBodega, List<Maridaje> maridajes, List<Bodega> bodegas, List<Varietal> varietales, List<Enofilo> enofilos, List<Reseña> reseñas){
-
+    public void persistirVinos(List<Vino> vinos){
+        vinoRepository.saveAll(vinos);
     }
 
 

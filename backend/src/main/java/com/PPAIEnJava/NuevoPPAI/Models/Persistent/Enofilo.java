@@ -21,6 +21,7 @@ public class Enofilo {
     @Column(name = "NOMBRE")
     private String nombre;
     @OneToOne
+    @JoinColumn(name = "USUARIO")
     private Usuario usuario;
 
     @OneToMany(mappedBy = "ENOFILO_PROPIETARIO")
