@@ -125,6 +125,10 @@ public class InterfazBD {
         vinoRepository.saveAll(vinos);
     }
 
+    public void persistirBodega(Bodega bodega){
+        bodegaRepository.save(bodega);
+    }
+
 
 
 }

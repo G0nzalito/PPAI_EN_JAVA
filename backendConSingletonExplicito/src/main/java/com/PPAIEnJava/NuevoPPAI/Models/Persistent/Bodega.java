@@ -103,12 +103,13 @@ public class Bodega implements Serializable {
 
     public List<Maridaje> buscarMaridaje(VinoRemoto vinoACrear, List<Maridaje> dataMaridajes) {
         List<Maridaje> maridajesADevolver = new ArrayList<>();
-        List<String> maridajesABuscar = Arrays.stream(vinoACrear.getMaridajes().split(",")).toList();
+        List<String> maridajesABuscar = Arrays.stream(vinoACrear.getMaridajes().split(",")).map(String::trim).toList();
         for (String maridajeAAsignar : maridajesABuscar) {
+            System.out.println(maridajeAAsignar);
             for (Maridaje maridajeEnBd : dataMaridajes) {
                 if (maridajeEnBd.sosMaridaje(maridajeAAsignar)) {
                     maridajesADevolver.add(maridajeEnBd);
-                    break;
+
                 }
             }
         }

@@ -27,24 +27,9 @@ public class Gestor {
 
     // OBJETOS DE LA BD CARGADOS EN MEMORIA
 
-    // INYECCIONES DE LOS REPOSITORIOS DE LOS OBJETOS
-
-    private BodegaRepository bodegaRepository;
-    private VinoRemotoRepositroy vinoRemotoRepository;
-    private MaridajeRepository maridajeRepository;
-    private VinoRepository vinoRepository;
-    private TipoUvaRepository tipoUvaRepository;
-    private UsuarioRepository usuarioRepository;
-    private VarietalRepository varietalRepository;
-    private EnofiloRepository enofiloRepository;
-    private SiguiendoRepository siguiendoRepository;
-    private ReseñaRepository reseñaRepository;
-    private VinosDeEnofiloRepository vinosDeEnofiloRepository;
-
-    // INYECCIONES DE LOS REPOSITORIOS DE LOS OBJETOS
     private LocalDateTime fechaActual;
     private List<Bodega> bodegasParaActualizar;
-    private Bodega bodegaAActualzar;
+    private Bodega bodegaAActualizar;
     private InterfazSistemaBodega interfazSistemaBodega;
     private InterfazBD interfazBD;
     private InterfazNotificacionesPush notificacionesPush;
@@ -75,7 +60,7 @@ public class Gestor {
         recuperarObjetos();
 
         //Empieza la ejecución de la logica de negocio
-        this.fechaActual = LocalDateTime.now();
+        this.fechaActual = getFechaActual();
         return buscarBodegasConActualizacion();
     }
 
@@ -84,7 +69,6 @@ public class Gestor {
     }
 
     private List<Bodega> buscarBodegasConActualizacion(){
-        List<Bodega> bodegas = interfazBD.getBodegas();
         List<Bodega> bodegasParaActualizacion = new ArrayList<>();
         for (Bodega bodega : bodegas) {
             if (bodega.esTiempoDeActualizar(fechaActual)){
@@ -95,13 +79,14 @@ public class Gestor {
     }
 
     public List<VinoActualizado> tomarSeleccionDeBodega(String nombreBodega){
-        long idBodega = interfazBD.getBodegaIdByNombre(nombreBodega);
-        this.bodegaAActualzar = interfazBD.findBodegaById(idBodega);
+        this.bodegaAActualizar = bodegas.stream().filter(bodega -> bodega.getNombre().equals(nombreBodega)).findFirst().get();
+        long idBodega = bodegaAActualizar.getID();
         List<VinoRemoto> vinosAActualizar = obtenerActualizacionesVinos(idBodega);
 
-        List<VinoActualizado> vinosActualizados = this.bodegaAActualzar.actualizarVinos(vinosAActualizar, vinos, maridajes, varietales);
+        List<VinoActualizado> vinosActualizados = actualizarVinosDeBodega(vinosAActualizar);
 
-        this.bodegaAActualzar.setFECHA_ULTIMA_ACTUALIZACION(fechaActual);
+        this.bodegaAActualizar.setFECHA_ULTIMA_ACTUALIZACION(fechaActual);
+        interfazBD.persistirBodega(bodegaAActualizar);
 
         notificarEnofilosSuscriptos();
 
@@ -114,10 +99,14 @@ public class Gestor {
         return interfazSistemaBodega.obtenerActualizacionesVinos(idBodega);
     }
 
+    private List<VinoActualizado> actualizarVinosDeBodega(List<VinoRemoto> vinosAActualizar){
+        return this.bodegaAActualizar.actualizarVinos(vinosAActualizar, vinos, maridajes, varietales);
+    }
+
     private void notificarEnofilosSuscriptos(){
         List<String> enofilosANotificar = new ArrayList<>();
         for (Enofilo enofilo : enofilos) {
-            if(enofilo.estaSuscriptoABodega(bodegaAActualzar)){
+            if(enofilo.estaSuscriptoABodega(bodegaAActualizar)){
                 enofilosANotificar.add(enofilo.obtenerNombreUsuario());
             }
         }
@@ -129,11 +118,12 @@ public class Gestor {
 
     private String generarNotificacion(){
         StringBuilder notificacion = new StringBuilder();
-        notificacion.append("Hay novedades en la bodega ").append(bodegaAActualzar.getNombre()).append(" disponibles en la app");
+        notificacion.append("Hay novedades en la bodega ").append(bodegaAActualizar.getNombre()).append(" disponibles en la app");
         return notificacion.toString();
     }
 
     private void persistirObjetosNuevos(){
+
         interfazBD.persistirVinos(vinos);
     }
 
