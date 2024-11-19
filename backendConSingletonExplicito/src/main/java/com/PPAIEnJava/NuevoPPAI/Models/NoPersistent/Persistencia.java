@@ -1,12 +1,10 @@
 package com.PPAIEnJava.NuevoPPAI.Models.NoPersistent;
 
 import com.PPAIEnJava.NuevoPPAI.Models.Persistent.*;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -93,7 +91,7 @@ public class Persistencia {
 
             Varietal v = new Varietal();
             v.setID((Integer) varietal[0]);
-            v.setID_UVA(tipoUva);
+            v.setUva(tipoUva);
             v.setPORCENTAJE((Integer) varietal[2]);
 
             varietales.add(v);
@@ -101,7 +99,7 @@ public class Persistencia {
         return varietales;
     }
 
-    public List<Vino> reconstruirVinos(List<Object[]> vinosAReconstruir, List<Maridaje> maridajes, List<Bodega> bodegas, List<Varietal> varietales, List<Enofilo> enofilos, List<Object[]> varietalesDeVino, List<Object[]> maridajesDeVino){
+    public List<Vino> reconstruirVinos(List<Object[]> vinosAReconstruir, List<Maridaje> maridajes, List<Bodega> bodegas, List<Varietal> varietales, List<Object[]> varietalesDeVino, List<Object[]> maridajesDeVino){
 
         List<Vino> vinos = new ArrayList<Vino>();
 
@@ -165,7 +163,7 @@ public class Persistencia {
             reseña1.setES_PREMIUM((Boolean) reseña[2]);
             reseña1.setFECHA_RESEÑA(((Timestamp) reseña[3]).toLocalDateTime());
             reseña1.setPUNTAJE((Integer) reseña[4]);
-            reseña1.setID_VINO(vino);
+            reseña1.setVino(vino);
             reseña1.setENOFILO_PROPIETARIO(enofilo);
 
             reseñas.add(reseña1);
@@ -195,9 +193,5 @@ public class Persistencia {
                 enofiloSeleccionado.getFavorito().add(vinoFavorito);
             }
         }
-    }
-
-    public void persistirVinos(List<Vino> vinosAPersistir){
-
     }
 }

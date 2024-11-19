@@ -84,9 +84,4 @@ public class Enofilo {
                 ", ID=" + ID +
                 '}';
     }
-
-    public void enviarNotificacion() {
-        // Implementación pendiente
-    }
-
 }

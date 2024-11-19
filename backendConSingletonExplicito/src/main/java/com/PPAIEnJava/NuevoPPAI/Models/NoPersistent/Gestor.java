@@ -45,7 +45,7 @@ public class Gestor {
         this.varietales = interfazBD.getVarietales(tiposUvas);
         this.enofilos = interfazBD.getEnofilos(usuarios);
         this.seguidos = interfazBD.getSiguiendos(enofilos, bodegas);
-        this.vinos = interfazBD.getVinos(maridajes, bodegas, varietales, enofilos, reseñas);
+        this.vinos = interfazBD.getVinos(maridajes, bodegas, varietales, enofilos);
         this.reseñas = interfazBD.getReseñas(vinos, enofilos);
         interfazBD.reconstruirVinosDeEnofilo(enofilos, vinos);
     }

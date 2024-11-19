@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
-
 @Entity
 @Table(name = "Varietal")
 @Getter
@@ -17,7 +15,7 @@ public class Varietal {
 
     @OneToOne
     @JoinColumn(referencedColumnName = "ID", name = "ID_UVA")
-    private TipoUva ID_UVA;
+    private TipoUva Uva;
 
     private int PORCENTAJE;
 
@@ -25,13 +23,13 @@ public class Varietal {
     public String toString() {
         return "Varietal{" +
                 "ID=" + ID +
-                ", UVA=" + ID_UVA.getNOMBRE() +
+                ", UVA=" + Uva.getNOMBRE() +
                 ", PORCENTAJE=" + PORCENTAJE +
                 '}';
     }
 
     public Varietal(TipoUva ID_UVA, int PORCENTAJE) {
-        this.ID_UVA = ID_UVA;
+        this.Uva = ID_UVA;
         this.PORCENTAJE = PORCENTAJE;
     }
 
@@ -39,16 +37,23 @@ public class Varietal {
 
     }
     public TipoUva conocerTipoDeUva() {
-        return this.ID_UVA;
+        return this.Uva;
     }
 
     public boolean esDeTipoUva(String tipoUva) {
-        return this.ID_UVA.getNOMBRE().equalsIgnoreCase(tipoUva);
+        return this.Uva.getNOMBRE().equalsIgnoreCase(tipoUva);
     }
 
+    public String getNombreUva(){
+        return this.Uva.getNOMBRE();
+    }
 
 
     public String mostrarPorcentaje() {
         return this.PORCENTAJE + "%";
+    }
+
+    public Boolean esTuPorcentaje(Integer porcentaje) {
+        return this.PORCENTAJE == porcentaje;
     }
 }

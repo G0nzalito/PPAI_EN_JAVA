@@ -1,10 +1,7 @@
 package com.PPAIEnJava.NuevoPPAI.Models.NoPersistent;
 
-import com.PPAIEnJava.NuevoPPAI.Models.Persistent.Vino;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.List;
 
 @Getter
 @Setter
@@ -18,6 +15,9 @@ public class VinoActualizado {
     private String nota_cata;
     private Integer precioArs;
     private Integer puntaje;
+    private String estado;
+    private String varietalesAMostrar;
+    private String maridajesAMostrar;
 
     public VinoActualizado(String nombreVino, String nombreBodega, String añanda, String fechaActualizacion, String imagen_etiqueta, String nota_cata, Integer precioArs, String estado, String varietalesAMostrar, String maridajesAActualizar, Integer puntaje) {
         this.nombreVino = nombreVino;
@@ -29,7 +29,7 @@ public class VinoActualizado {
         this.precioArs = precioArs;
         this.estado = estado;
         this.varietalesAMostrar = varietalesAMostrar;
-        this.maridajesAActualizar = maridajesAActualizar;
+        this.maridajesAMostrar = maridajesAActualizar;
         this.puntaje = puntaje;
     }
 
@@ -46,13 +46,8 @@ public class VinoActualizado {
                 ", precioArs=" + precioArs +
                 ", estado='" + estado + '\'' +
                 ", varietalesAMostrar='" + varietalesAMostrar + '\'' +
-                ", maridajesAActualizar='" + maridajesAActualizar + '\'' +
+                ", maridajesAActualizar='" + maridajesAMostrar + '\'' +
                 '}';
     }
-
-    private String estado;
-    private String varietalesAMostrar;
-    private String maridajesAActualizar;
-
 
 }

@@ -26,7 +26,7 @@ public class Reseña {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(referencedColumnName = "ID", name = "ID_VINO")
-    private Vino ID_VINO;
+    private Vino Vino;
 
     @ManyToOne
     @JoinColumn(name = "ENOFILO_PROPIETARIO")
@@ -37,7 +37,7 @@ public class Reseña {
         this.ES_PREMIUM = ES_PREMIUM;
         this.FECHA_RESEÑA = FECHA_RESEÑA;
         this.PUNTAJE = PUNTAJE;
-        this.ID_VINO = ID_VINO;
+        this.Vino = ID_VINO;
     }
 
     public Reseña() {
@@ -45,7 +45,7 @@ public class Reseña {
     }
 
     public Long getVinoId(){
-        return this.ID_VINO.getID();
+        return this.Vino.getID();
     }
 
     @Override
@@ -56,7 +56,7 @@ public class Reseña {
                 ", ES_PREMIUM=" + ES_PREMIUM +
                 ", FECHA_RESEÑA=" + FECHA_RESEÑA +
                 ", PUNTAJE=" + PUNTAJE +
-                ", ID_VINO=" + ID_VINO.getID() +
+                ", ID_VINO=" + Vino.getID() +
                 '}';
     }
 

@@ -66,14 +66,6 @@ public class InterfazBD {
         return vinoRemotoRepository.findVinoByBodega(idBodegaStr);
     }
 
-    public long getBodegaIdByNombre(String nombreBodega){
-        return bodegaRepository.recoverIdByNombre(nombreBodega);
-    }
-
-    public Bodega findBodegaById(long idBodega){
-        return bodegaRepository.findById(idBodega).get();
-    }
-
     public List<Maridaje> getMaridajes(){
         return maridajeRepository.findAll();
     }
@@ -113,11 +105,11 @@ public class InterfazBD {
         persistencia.reconstruirVinosDeEnofilo(enofilos, vinos, vinosDeEnofilo);
     }
 
-    public List<Vino> getVinos(List<Maridaje> maridajes, List<Bodega> bodegas, List<Varietal> varietales, List<Enofilo> enofilos, List<Reseña> reseñas){
+    public List<Vino> getVinos(List<Maridaje> maridajes, List<Bodega> bodegas, List<Varietal> varietales, List<Enofilo> enofilos){
         List<Object[]> vinosAReconstruir = vinoRepository.getVinos();
         List<Object[]> maridajesVino = maridajeRepository.getMaridajesVino();
         List<Object[]> varietalesVino = varietalRepository.getVarietalesVino();
-        return persistencia.reconstruirVinos(vinosAReconstruir, maridajes, bodegas, varietales, enofilos,varietalesVino, maridajesVino);
+        return persistencia.reconstruirVinos(vinosAReconstruir, maridajes, bodegas, varietales,varietalesVino, maridajesVino);
 
     }
 

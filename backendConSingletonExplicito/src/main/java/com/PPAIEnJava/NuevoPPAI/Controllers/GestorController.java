@@ -40,14 +40,4 @@ public class GestorController {
 
     }
 
-    public List<String> getVarietalesAMostrar(List<Varietal> Varietales) {
-        List<String> varietalesAMostrar = new ArrayList<>();
-        for (Varietal varietal : Varietales) {
-            String nombreTipoUva = varietal.conocerTipoDeUva().getNOMBRE();
-            int porcentaje = varietal.getPORCENTAJE();
-            varietalesAMostrar.add(nombreTipoUva + ": " + porcentaje + "%");
-        }
-        return varietalesAMostrar;
-    }
-
 }

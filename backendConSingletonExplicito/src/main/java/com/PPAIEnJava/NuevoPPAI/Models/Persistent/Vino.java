@@ -50,7 +50,7 @@ public class Vino {
     )
     private List<Varietal> VarietalesVino;
 
-    @OneToMany(mappedBy = "ID_VINO")
+    @OneToMany(mappedBy = "Vino")
     private List<Reseña> reseñas;
 
     public Vino() {
@@ -105,22 +105,29 @@ public class Vino {
         return contador > 0 ? Math.round((float) suma / contador) : 0;
     }
 
-    public List<String> getVarietalesAMostrar() {
-        List<String> varietalesAMostrar = new ArrayList<>();
-        for (Varietal varietal : getVarietalesVino()) {
-            String nombreTipoUva = varietal.conocerTipoDeUva().getNOMBRE();
-            int porcentaje = varietal.getPORCENTAJE();
-            varietalesAMostrar.add(nombreTipoUva + ": " + porcentaje + "%");
-        }
-        return varietalesAMostrar;
-    }
-
     public boolean esDeBodega(String nombreBodega) {
         return this.BODEGA != null && this.BODEGA.getNombre().equals(nombreBodega);
     }
+    
 
-    public boolean esTuNombre(String nombre) {
-        return this.NOMBRE.equals(nombre);
+    public String getVarietalesAMostrar(){
+        StringBuilder varietalAMostrar = new StringBuilder();
+        for (Varietal varietal : this.getVarietalesVino()) {
+            String nombreTipoUva = varietal.getNombreUva();
+            int porcentaje = varietal.getPORCENTAJE();
+            varietalAMostrar.append(nombreTipoUva).append(": ").append(porcentaje).append("%");
+        }
+        return varietalAMostrar.toString();
+    }
+
+    public String getMaridajesAMostrar(){
+        StringBuilder maridajeAMostrar = new StringBuilder();
+        for (Maridaje maridaje : this.getMaridajesVino()) {
+            String nombreMaridaje = maridaje.getNOMBRE();
+            maridajeAMostrar.append(nombreMaridaje).append(",");
+        }
+
+        return maridajeAMostrar.toString();
     }
 
 }

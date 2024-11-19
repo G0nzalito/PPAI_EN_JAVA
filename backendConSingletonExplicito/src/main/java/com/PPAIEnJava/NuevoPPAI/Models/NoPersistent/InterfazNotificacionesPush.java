@@ -15,6 +15,7 @@ public class InterfazNotificacionesPush {
         for (String usuario : usuariosANotificar) {
             StringBuilder str = new StringBuilder();
             str.append("El usuario ").append(usuario).append(" fue notificado con exito de que ").append(notificacion);
+            System.out.println(str);
         }
     }
 }

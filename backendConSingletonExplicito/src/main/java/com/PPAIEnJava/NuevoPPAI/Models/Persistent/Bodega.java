@@ -124,7 +124,7 @@ public class Bodega implements Serializable {
             String nombreVarietal = ItVarietales.next();
             String porcentajeVarietal = ItVarietales.next().trim();
             for (Varietal varietal : varietales) {
-                if (varietal.esDeTipoUva(nombreVarietal) && varietal.getPORCENTAJE() == Integer.parseInt(porcentajeVarietal)) {
+                if (varietal.esDeTipoUva(nombreVarietal) && varietal.esTuPorcentaje(Integer.parseInt(porcentajeVarietal))) {
                     varietalesADevolver.add(varietal);
                 }
             }
@@ -145,23 +145,15 @@ public class Bodega implements Serializable {
             while (itVinosBd.hasNext()) {
                 Vino vinoBD = itVinosBd.next();
                 if (vinoBD.sosVinoAActualizar(vino.getNOMBRE())){
-                    System.out.println("entré");
                     vinoBD.setPRECIOARS(vino.getPRECIOARS());
                     vinoBD.setIMAGEN_ETIQUETA(vino.getIMAGEN_ETIQUETA());
                     vinoBD.setFECHA_ACTUALIZACION(vino.getFECHA_ACTUALIZACION());
                     vinoBD.setNOTA_CATA(vino.getNOTA_CATA());
 
-                    StringBuilder varietalAMostrar = new StringBuilder();
-                    for (Varietal varietal : vinoBD.getVarietalesVino()) {
-                        String nombreTipoUva = varietal.conocerTipoDeUva().getNOMBRE();
-                        int porcentaje = varietal.getPORCENTAJE();
-                        varietalAMostrar.append(nombreTipoUva).append(": ").append(porcentaje).append("%");
-                    }
-                    StringBuilder maridajeAMostrar = new StringBuilder();
-                    for (Maridaje maridaje : vinoBD.getMaridajesVino()) {
-                        String nombreMaridaje = maridaje.getNOMBRE();
-                        maridajeAMostrar.append(nombreMaridaje).append(",");
-                    }
+                    String varietalAMostrar = vinoBD.getVarietalesAMostrar();
+
+                    String maridajeAMostrar = vinoBD.getMaridajesAMostrar();
+
                     vinosActualizados.add(new VinoActualizado(
                             vinoBD.getNOMBRE(),
                             vinoBD.getBODEGA().getNombre(),
@@ -171,8 +163,8 @@ public class Bodega implements Serializable {
                             vinoBD.getNOTA_CATA(),
                             vinoBD.getPRECIOARS(),
                             "Actualizado",
-                            varietalAMostrar.toString(),
-                            maridajeAMostrar.toString(),
+                            varietalAMostrar,
+                            maridajeAMostrar,
                             vinoBD.calcularRanking()
                     ));
                     existia = true;
